@@ -18,6 +18,9 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\CategoryResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -34,23 +37,21 @@ class CategoryResource extends Resource
         return $form
             ->schema([
                 Section::make([
-                    // Grid::make()->schema([
+                    Grid::make()->schema([
+                        TextInput::make('name')
+                            ->label('Name')
+                            ->maxLength(255)
+                            ->required()
+                            ->live(onBlur: true) // the form will re-render after the field is blurred (after finishing typing) to update the slug field
+                            ->afterStateUpdated(fn (string $operation, $state, Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null), // after the state is updated, it will call the `afterStateUpdated` method to copy the value of the name to the slug (if the operation is create mode)
 
-                    // ]),
-
-                    TextInput::make('name')
-                        ->label('Name')
-                        ->maxLength(255)
-                        ->required()
-                        ->live(onBlur: true) // the form will re-render after the field is blurred (after finishing typing) to update the slug field
-                        ->afterStateUpdated(fn (string $operation, $state, Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null), // after the state is updated, it will call the `afterStateUpdated` method to copy the value of the name to the slug (if the operation is create mode)
-
-                    TextInput::make('slug')
-                        ->label('Slug')
-                        ->dehydrated()
-                        ->maxLength(255)
-                        ->required()
-                        ->unique(Category::class, 'slug', ignoreRecord: true), // (category class, column name) => `unique validation rule`, also ignore to check if its unique if its in the edit mode
+                        TextInput::make('slug')
+                            ->label('Slug')
+                            ->dehydrated()
+                            ->maxLength(255)
+                            ->required()
+                            ->unique(Category::class, 'slug', ignoreRecord: true), // (category class, column name) => `unique validation rule`, also ignore to check if its unique if its in the edit mode
+                    ]),
 
                     FileUpload::make('image')
                         ->image()
@@ -68,18 +69,23 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('slug')
+
+                TextColumn::make('slug')
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('image'),
-                Tables\Columns\IconColumn::make('is_active')
+
+                ImageColumn::make('image'),
+
+                IconColumn::make('is_active')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('created_at')
+
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
