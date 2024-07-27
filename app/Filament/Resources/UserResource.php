@@ -18,6 +18,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Actions\BulkActionGroup; // dropdown bulk action
+use Filament\Tables\Actions\ActionGroup; // dropdown action group
 use Filament\Tables\Actions\DeleteBulkAction;
 
 // import actions stuff
@@ -95,9 +96,11 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
-                ViewAction::make(),
-                EditAction::make(),
-                DeleteAction::make(),
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ]),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
