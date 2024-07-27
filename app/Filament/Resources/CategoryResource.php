@@ -25,6 +25,10 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\CategoryResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\CategoryResource\RelationManagers;
+use Filament\Tables\Actions\ActionGroup; // dropdown action group
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\DeleteAction;
 
 class CategoryResource extends Resource
 {
@@ -72,10 +76,10 @@ class CategoryResource extends Resource
                 TextColumn::make('name')
                     ->searchable(),
 
+                ImageColumn::make('image'),
+
                 TextColumn::make('slug')
                     ->searchable(),
-
-                ImageColumn::make('image'),
 
                 IconColumn::make('is_active')
                     ->boolean(),
@@ -94,7 +98,11 @@ class CategoryResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    // ViewAction::make(),
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
