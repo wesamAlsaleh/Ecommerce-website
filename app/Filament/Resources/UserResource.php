@@ -2,20 +2,38 @@
 
 namespace App\Filament\Resources;
 
+// import filament stuff
 use Filament\Forms;
 use App\Models\User;
 use Filament\Tables;
-use Filament\Forms\Form;
 use Filament\Pages\Page;
-use Filament\Tables\Table;
-use Filament\Resources\Resource;
+
+// import form stuff
+use Filament\Forms\Form;
 use Filament\Forms\Components\TextInput;
-use Illuminate\Database\Eloquent\Builder;
-use Filament\Resources\Pages\CreateRecord;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Resources\Pages\CreateRecord;
+
+// import table stuff
+use Filament\Tables\Table;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\BulkActionGroup; // dropdown bulk action
+use Filament\Tables\Actions\DeleteBulkAction;
+
+// import actions stuff
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\DeleteAction;
+
+
+use Filament\Resources\Resource;
+use Illuminate\Database\Eloquent\Builder;
+
+
 use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\RelationManagers;
+
 
 class UserResource extends Resource
 {
@@ -25,7 +43,7 @@ class UserResource extends Resource
 
     public static function form(Form $form): Form
     {
-        // create a new user form
+        // create the user resource form (add, edit user)
         return $form
             ->schema([
                 TextInput::make('name')
@@ -58,17 +76,32 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                //
+                // the columns that will be displayed in the table
+                TextColumn::make('name')
+                    ->searchable(),
+
+                TextColumn::make('email')
+                    ->searchable(),
+
+                TextColumn::make('email_verified_at')
+                    ->dateTime('d-m-Y H:i:s')
+                    ->sortable(),
+
+                TextColumn::make('created_at')
+                    ->dateTime('d-m-Y H:i:s')
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                ViewAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
