@@ -2,16 +2,26 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CategoryResource\Pages;
-use App\Filament\Resources\CategoryResource\RelationManagers;
-use App\Models\Category;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Set;
+use App\Models\Category;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Image;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Boolean;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\CategoryResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\CategoryResource\RelationManagers;
 
 class CategoryResource extends Resource
 {
@@ -23,16 +33,44 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('slug')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\FileUpload::make('image')
-                    ->image(),
-                Forms\Components\Toggle::make('is_active')
-                    ->required(),
+                Section::make([
+                    Grid::make()->schema([
+                        TextInput::make('name')
+                            ->label('Name')
+                            ->maxLength(255)
+                            ->required()
+                            ->live(onBlur: true) // the form will re-render after the field is blurred (after finishing typing) to update the slug field
+                            ->afterStateUpdated(fn (string $operation, $state, Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null), // after the state is updated, it will call the `afterStateUpdated` method to copy the value of the name to the slug (if the operation is create mode)
+
+                        TextInput::make('slug')
+                            ->label('Slug')
+                            ->dehydrated()
+                            ->maxLength(255)
+                            ->disabled() // (disabled) => `readonly` attribute
+                            ->required()
+                            ->unique(Category::class, 'slug', ignoreRecord: true), // (category class, column name) => `unique validation rule`, also ignore to check if its unique if its in the edit mode
+                    ]),
+
+                    FileUpload::make('image')
+                        ->image()
+                        ->label('Image')
+                        // ->imageSize('1:1')
+                        // ->imageCropAspectRatio('1:1')
+                        // ->imageCropMinDimensions('100:100')
+                        // ->imageCropMaxDimensions('1000:1000')
+                        // ->imagePreviewSize('200px')
+                        // ->imageStorageDirectory('categories')
+                        ->required(),
+
+                    Toggle::make('is_active')
+                        ->label('Is Active')
+                        ->default(false),
+
+                    // Textarea::make('description')
+                    //     ->label('Description')
+                    //     ->rows(3)
+                    //     ->maxLength(255),
+                ])
             ]);
     }
 
