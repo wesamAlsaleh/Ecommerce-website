@@ -34,22 +34,24 @@ class CategoryResource extends Resource
         return $form
             ->schema([
                 Section::make([
-                    Grid::make()->schema([
-                        TextInput::make('name')
-                            ->label('Name')
-                            ->maxLength(255)
-                            ->required()
-                            ->live(onBlur: true) // the form will re-render after the field is blurred (after finishing typing) to update the slug field
-                            ->afterStateUpdated(fn (string $operation, $state, Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null), // after the state is updated, it will call the `afterStateUpdated` method to copy the value of the name to the slug (if the operation is create mode)
+                    // Grid::make()->schema([
 
-                        TextInput::make('slug')
-                            ->label('Slug')
-                            ->dehydrated()
-                            ->maxLength(255)
-                            ->disabled() // (disabled) => `readonly` attribute
-                            ->required()
-                            ->unique(Category::class, 'slug', ignoreRecord: true), // (category class, column name) => `unique validation rule`, also ignore to check if its unique if its in the edit mode
-                    ]),
+                    // ]),
+
+                    TextInput::make('name')
+                        ->label('Name')
+                        ->maxLength(255)
+                        ->required()
+                        ->live(onBlur: true) // the form will re-render after the field is blurred (after finishing typing) to update the slug field
+                        ->afterStateUpdated(fn (string $operation, $state, Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null), // after the state is updated, it will call the `afterStateUpdated` method to copy the value of the name to the slug (if the operation is create mode)
+
+                    TextInput::make('slug')
+                        ->label('Slug')
+                        ->dehydrated()
+                        ->maxLength(255)
+                        ->disabled() // (disabled) => `readonly` attribute
+                        ->required()
+                        ->unique(Category::class, 'slug', ignoreRecord: true), // (category class, column name) => `unique validation rule`, also ignore to check if its unique if its in the edit mode
 
                     FileUpload::make('image')
                         ->image()
@@ -59,11 +61,6 @@ class CategoryResource extends Resource
                     Toggle::make('is_active')
                         ->label('Is Active')
                         ->default(false),
-
-                    // Textarea::make('description')
-                    //     ->label('Description')
-                    //     ->rows(3)
-                    //     ->maxLength(255),
                 ])
             ]);
     }
