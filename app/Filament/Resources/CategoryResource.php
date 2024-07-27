@@ -54,12 +54,6 @@ class CategoryResource extends Resource
                     FileUpload::make('image')
                         ->image()
                         ->label('Image')
-                        // ->imageSize('1:1')
-                        // ->imageCropAspectRatio('1:1')
-                        // ->imageCropMinDimensions('100:100')
-                        // ->imageCropMaxDimensions('1000:1000')
-                        // ->imagePreviewSize('200px')
-                        // ->imageStorageDirectory('categories')
                         ->required(),
 
                     Toggle::make('is_active')
