@@ -49,7 +49,6 @@ class CategoryResource extends Resource
                         ->label('Slug')
                         ->dehydrated()
                         ->maxLength(255)
-                        ->disabled() // (disabled) => `readonly` attribute
                         ->required()
                         ->unique(Category::class, 'slug', ignoreRecord: true), // (category class, column name) => `unique validation rule`, also ignore to check if its unique if its in the edit mode
 
