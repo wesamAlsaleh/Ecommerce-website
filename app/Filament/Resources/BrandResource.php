@@ -51,7 +51,6 @@ class BrandResource extends Resource
                         TextInput::make('slug')
                             ->label('Slug')
                             ->dehydrated()
-                            ->readOnly()
                             ->maxLength(255)
                             ->required()
                             ->unique(Brand::class, 'slug', ignoreRecord: true), // (brand class, column name) => `unique validation rule`, also ignore to check if its unique if its in the edit mode
@@ -60,6 +59,7 @@ class BrandResource extends Resource
                     FileUpload::make('logo')
                         ->image()
                         ->label('Brand Logo')
+                        ->directory('brands-logo')
                         ->required(),
 
                     Toggle::make('is_active')
