@@ -2,35 +2,34 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\OrderResource\Pages;
-use App\Filament\Resources\OrderResource\RelationManagers;
-use App\Models\Order;
-use App\Models\Product;
-use Faker\Core\Number;
 use Filament\Forms;
-use Filament\Forms\Components\Group;
-use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\ToggleButtons;
+use NumberFormatter;
+use App\Models\Order;
+use Faker\Core\Number;
+use App\Models\Product;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
-
-// for the colors Color::NAME
-use Filament\Support\Colors\Color;
-
-// for the currency formatter in the placeholder
-use NumberFormatter;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Filament\Support\Colors\Color; // for the colors Color::NAME
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Textarea;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Columns\SelectColumn;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\Placeholder; // for the currency formatter in the placeholder
+use Filament\Forms\Components\ToggleButtons;
+use App\Filament\Resources\OrderResource\Pages;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\OrderResource\RelationManagers;
 
 class OrderResource extends Resource
 {
@@ -52,12 +51,12 @@ class OrderResource extends Resource
                             ->searchable()
                             ->preload(),
 
-                        Select::make('payment_method')
+                        Select::make('payment_method') // expected to be string
                             ->options([
                                 // 'paypal' => 'Paypal',
-                                'stripe' => 'Stripe',
                                 // 'credit_card' => 'Credit Card',
-                                'cash_on_delivery' => 'Cash on delivery',
+                                'stripe' => 'Stripe',
+                                'cash on delivery' => 'Cash on delivery',
                             ])
                             ->required()
                             ->label('Payment method')
@@ -67,7 +66,7 @@ class OrderResource extends Resource
                             ->options([
                                 'pending' => 'Pending',
                                 'paid' => 'Paid using stripe',
-                                'failed' => 'Failed',
+                                'failed' => 'Failed using stripe, so the payment is cash on delivery',
                             ])
                             ->default('pending')
                             ->required()
@@ -103,13 +102,13 @@ class OrderResource extends Resource
                             ->required()
                             ->label('Order status'),
 
-                        Select::make('currency')
+                        Select::make('currency')  // expected to be string
                             ->options([
                                 'BHD' => 'BHD',
                                 'usd' => 'USD',
                                 'eur' => 'EUR',
                             ])
-                            ->default('bhd')
+                            ->default('BHD')
                             ->label('Currency')
                             ->placeholder('Select the currency'),
 
@@ -212,29 +211,53 @@ class OrderResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')
+                TextColumn::make('user.name') // powered by the user relationship in the order model 
+                    ->sortable()
+                    ->searchable()
+                    ->label('Customer'),
+
+                // TextColumn::make('first_order')
+                //     ->getStateUsing(function ($record) {
+                //         return $record->orderItems->first()->product->name;
+                //     }),
+
+                TextColumn::make('total')
                     ->numeric()
+                    ->sortable()
+                    ->money(),
+
+                TextColumn::make('payment_method')
+                    ->searchable(),
+
+                TextColumn::make('payment_status')
+                    ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('total')
-                    ->numeric()
+
+                TextColumn::make('currency')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('shipping_method')
+                    ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('payment_method')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('payment_status')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('status'),
-                Tables\Columns\TextColumn::make('currency')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('shipping_fee')
-                    ->numeric()
+
+                SelectColumn::make('status')
+                    ->options([
+                        'pending' => 'Pending',
+                        'shipped' => 'Shipped',
+                        'delivered' => 'Delivered',
+                        'declined' => 'Declined',
+                        'canceled' => 'Cancelled',
+                    ])
+                    ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('shipping_method')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -243,8 +266,12 @@ class OrderResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -258,6 +285,22 @@ class OrderResource extends Resource
         return [
             //
         ];
+    }
+
+    /**
+     * get the total number of orders to display in the navigation badge
+     */
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count(); // get the total number of orders in the database and display it in the navigation badge 
+    }
+
+    /**
+     * change the navigation badge color
+     */
+    public static function getNavigationBadgeColor(): string | array | null
+    {
+        return static::getModel()::count() > 10 ? Color::Green : Color::Red; // if the total number of orders is greater than 10, display the badge in red color, otherwise display it in green color
     }
 
     public static function getPages(): array
