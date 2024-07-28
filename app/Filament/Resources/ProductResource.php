@@ -25,6 +25,11 @@ use Filament\Forms\Components\MarkdownEditor;
 use App\Filament\Resources\ProductResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ProductResource\RelationManagers;
+use Filament\Tables\Actions\ActionGroup; // dropdown action group
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\DeleteAction;
 
 class ProductResource extends Resource
 {
@@ -72,7 +77,10 @@ class ProductResource extends Resource
                         FileUpload::make('images')
                             ->label('Images')
                             ->placeholder('Upload product images')
-                            ->directory('products')
+                            ->directory(function ($get) {
+                                $slug = $get('slug');
+                                return $slug ? "products/{$slug}" : 'products'; // store the images in a folder named after the product slug (if it exists), otherwise store them in a folder named 'products' 
+                            })
                             ->maxFiles(5)
                             ->reorderable()
                             ->multiple()
@@ -98,7 +106,7 @@ class ProductResource extends Resource
                             ->searchable()
                             // ->options(fn () => \App\Models\Category::pluck('name', 'id')) // get the categories from the database to display in the select dropdown 
                             ->required()
-                            ->relationship('category', 'name'), // get the category name from the database to display in the select dropdown (using the relationship method we created in the Category model)
+                            ->relationship('category', 'name'), // get the category name from the database to display in the select dropdown (using the relationship method we created in the Product model)
 
                         Select::make('brand_id')
                             ->label('Brand')
@@ -106,7 +114,7 @@ class ProductResource extends Resource
                             ->preload()
                             ->searchable()
                             // ->options(fn () => \App\Models\Brand::pluck('name', 'id')) // get the brands from the database to display in the select dropdown
-                            ->relationship('brand', 'name') // get the brand name from the database to display in the select dropdown (using the relationship method we created in the Brand model)
+                            ->relationship('brand', 'name') // get the brand name from the database to display in the select dropdown (using the relationship method we created in the Product model)
                             ->required(),
                     ]), //end of section 2
 
@@ -139,18 +147,19 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('category_id')
-                    ->numeric()
-                    ->sortable(),
-
-                TextColumn::make('brand_id')
-                    ->numeric()
-                    ->sortable(),
-
                 TextColumn::make('name')
                     ->searchable(),
 
+                TextColumn::make('category.name') // get the category name from the database to display in the table (power of Product relationships)
+                    ->label('Category')
+                    ->searchable(),
+
+                TextColumn::make('brand.name') // get the brand name from the database to display in the table (power of Product relationships)
+                    ->label('Brand')
+                    ->searchable(),
+
                 TextColumn::make('slug')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->searchable(),
 
                 TextColumn::make('price')
@@ -180,10 +189,27 @@ class ProductResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('category_id')
+                    ->label('Category')
+                    ->relationship('category', 'name'), // get the category name from the database to display in the filter dropdown (power of Product relationships)
+
+                SelectFilter::make('brand_id')
+                    ->label('Brand')
+                    ->relationship('brand', 'name'), // get the brand name from the database to display in the filter dropdown (power of Product relationships)
+
+                SelectFilter::make('is_active')
+                    ->label('Active')
+                    ->options([
+                        1 => 'Yes',
+                        0 => 'No',
+                    ]),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -208,3 +234,7 @@ class ProductResource extends Resource
         ];
     }
 }
+
+/**
+ * ->dehydrated() // hide the field from the form, but still send the data to the server
+ */
