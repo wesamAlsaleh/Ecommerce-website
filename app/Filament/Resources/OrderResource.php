@@ -105,7 +105,7 @@ class OrderResource extends Resource
 
                         Select::make('currency')
                             ->options([
-                                'bhd' => 'BHD',
+                                'BHD' => 'BHD',
                                 'usd' => 'USD',
                                 'eur' => 'EUR',
                             ])
@@ -196,8 +196,7 @@ class OrderResource extends Resource
                                 $set('total', $totalPrice);
 
                                 return (new NumberFormatter('en_BH', NumberFormatter::CURRENCY))->formatCurrency($totalPrice, 'BHD'); // Return the total price formatted as BHD currency
-                            })
-                            ->columnSpanFull(), // End Placeholder
+                            }), // End Placeholder
 
 
                         // Hidden field to store the total price of the order and send it to the database (it will be used to store the total price of the order)
