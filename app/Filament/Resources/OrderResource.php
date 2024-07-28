@@ -6,8 +6,11 @@ use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
 use App\Models\Order;
 use App\Models\Product;
+use Faker\Core\Number;
 use Filament\Forms;
 use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -25,6 +28,9 @@ use Filament\Forms\Set;
 
 // for the colors Color::NAME
 use Filament\Support\Colors\Color;
+
+// for the currency formatter in the placeholder
+use NumberFormatter;
 
 class OrderResource extends Resource
 {
@@ -60,7 +66,7 @@ class OrderResource extends Resource
                         Select::make('payment_status') // expected to be string
                             ->options([
                                 'pending' => 'Pending',
-                                'paid' => 'Paid',
+                                'paid' => 'Paid using stripe',
                                 'failed' => 'Failed',
                             ])
                             ->default('pending')
@@ -155,10 +161,10 @@ class OrderResource extends Resource
 
                                 TextInput::make('price') // expected to be decimal IN ORDER ITEM schema (price of the product at the time of order)
                                     ->numeric()
-                                    ->required()
                                     ->prefix('BHD')
                                     ->label('Product price')
                                     ->placeholder('Product price')
+                                    ->dehydrated()
                                     ->columnSpan(3),
 
                                 TextInput::make('total') // expected to be decimal IN ORDER ITEM schema (total price of the product in the order)
@@ -169,7 +175,34 @@ class OrderResource extends Resource
                                     ->disabled()
                                     ->dehydrated()
                                     ->columnSpan(4),
-                            ])->columns(12) // End Repeater schema (Order items) 
+                            ])->columns(12), // End Repeater schema (Order items) 
+
+                        Placeholder::make('total_price')
+                            ->content(function (Get $get, Set $set) {
+                                $totalPrice = 0;
+
+                                // if the repeater items are not found, return the total price which is 0
+                                if (!$repeaterItems = $get('orderItems')) {
+                                    return $totalPrice; // if no products in the order, return 0
+                                }
+
+                                // loop through the order items and get the total price of the order
+                                foreach ($repeaterItems as $repeaterItem => $value) {
+                                    $totalPrice += $get("orderItems.{$repeaterItem}.total"); // get the total price of the product in the order  
+                                }
+
+
+                                // return the total price of the order to the hidden field
+                                $set('total', $totalPrice);
+
+                                return (new NumberFormatter('en_BH', NumberFormatter::CURRENCY))->formatCurrency($totalPrice, 'BHD'); // Return the total price formatted as BHD currency
+                            })
+                            ->columnSpanFull(), // End Placeholder
+
+
+                        // Hidden field to store the total price of the order and send it to the database (it will be used to store the total price of the order)
+                        Hidden::make('total')
+                            ->default(0), // End Hidden
 
                     ]), // End Section 2
                 ])->columnSpanFull() // End Group 1
