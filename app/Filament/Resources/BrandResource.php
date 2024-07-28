@@ -4,38 +4,28 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
+use App\Models\Brand;
 use Filament\Forms\Set;
-use App\Models\Category;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Image;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\Boolean;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\ImageColumn;
 use Illuminate\Database\Eloquent\Builder;
-use App\Filament\Resources\CategoryResource\Pages;
+use App\Filament\Resources\BrandResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\CategoryResource\RelationManagers;
-use Filament\Tables\Actions\ActionGroup; // dropdown action group
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\DeleteAction;
+use App\Filament\Resources\BrandResource\RelationManagers;
 
-class CategoryResource extends Resource
+class BrandResource extends Resource
 {
-    // get the model class to be used by the resource
-    protected static ?string $model = Category::class;
+    protected static ?string $model = Brand::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-tag';
 
     public static function form(Form $form): Form
     {
@@ -53,14 +43,15 @@ class CategoryResource extends Resource
                         TextInput::make('slug')
                             ->label('Slug')
                             ->dehydrated()
+                            ->readOnly()
                             ->maxLength(255)
                             ->required()
-                            ->unique(Category::class, 'slug', ignoreRecord: true), // (category class, column name) => `unique validation rule`, also ignore to check if its unique if its in the edit mode
+                            ->unique(Brand::class, 'slug', ignoreRecord: true), // (category class, column name) => `unique validation rule`, also ignore to check if its unique if its in the edit mode
                     ]),
 
-                    FileUpload::make('image')
+                    FileUpload::make('logo')
                         ->image()
-                        ->label('Image')
+                        ->label('Brand Logo')
                         ->required(),
 
                     Toggle::make('is_active')
@@ -74,23 +65,19 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
+                Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-
-                ImageColumn::make('image'),
-
-                TextColumn::make('slug')
+                Tables\Columns\TextColumn::make('slug')
                     ->searchable(),
-
-                IconColumn::make('is_active')
+                Tables\Columns\TextColumn::make('logo')
+                    ->searchable(),
+                Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
-
-                TextColumn::make('created_at')
+                Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('updated_at')
+                Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -99,11 +86,7 @@ class CategoryResource extends Resource
                 //
             ])
             ->actions([
-                ActionGroup::make([
-                    // ViewAction::make(),
-                    EditAction::make(),
-                    DeleteAction::make(),
-                ]),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -122,9 +105,9 @@ class CategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCategories::route('/'),
-            'create' => Pages\CreateCategory::route('/create'),
-            'edit' => Pages\EditCategory::route('/{record}/edit'),
+            'index' => Pages\ListBrands::route('/'),
+            'create' => Pages\CreateBrand::route('/create'),
+            'edit' => Pages\EditBrand::route('/{record}/edit'),
         ];
     }
 }
