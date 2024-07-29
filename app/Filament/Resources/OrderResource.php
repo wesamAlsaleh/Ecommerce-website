@@ -224,6 +224,7 @@ class OrderResource extends Resource
                 //     }),
 
                 TextColumn::make('total')
+                    ->label('Total price')
                     ->numeric()
                     ->sortable()
                     ->money(),

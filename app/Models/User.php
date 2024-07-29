@@ -43,4 +43,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    // Relationships for User
+
+    // User has many orders
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }
