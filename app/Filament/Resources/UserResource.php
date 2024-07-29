@@ -49,6 +49,10 @@ class UserResource extends Resource
      */
     protected static ?string $recordTitleAttribute = 'name';
 
+    /**
+     * this will be used for reordering the navigation items.
+     */
+    protected static ?int $navigationSort = 6;
 
 
     public static function form(Form $form): Form

@@ -41,6 +41,11 @@ class BrandResource extends Resource
      */
     protected static ?string $recordTitleAttribute = 'name';
 
+    /**
+     * this will be used for reordering the navigation items.
+     */
+    protected static ?int $navigationSort = 4;
+
     public static function form(Form $form): Form
     {
         return $form
