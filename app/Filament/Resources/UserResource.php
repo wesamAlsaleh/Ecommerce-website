@@ -125,6 +125,16 @@ class UserResource extends Resource
         ];
     }
 
+    /**
+     * To enable global search on your model, you must set a title attribute for your resource:
+     * this will be used for searching across multiple columns the original and the extra attributes.
+     * in this case we are searching on the name and email columns.
+     */
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'email'];
+    }
+
     public static function getPages(): array
     {
         return [
