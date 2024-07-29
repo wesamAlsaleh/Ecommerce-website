@@ -37,6 +37,12 @@ class ProductResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
 
+    /**
+     * To enable global search on your model, you must set a title attribute for your resource:
+     * this will be used for the global search.
+     */
+    protected static ?string $recordTitleAttribute = 'name';
+
     public static function form(Form $form): Form
     {
         return $form
