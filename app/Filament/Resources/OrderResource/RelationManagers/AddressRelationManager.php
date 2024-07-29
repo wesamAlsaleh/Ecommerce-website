@@ -9,6 +9,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Actions\ActionGroup;
+
 
 class AddressRelationManager extends RelationManager
 {
@@ -52,7 +54,29 @@ class AddressRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('home')
             ->columns([
-                Tables\Columns\TextColumn::make('home'),
+                Tables\Columns\TextColumn::make('fullName') // using the getFullNameAttribute accessor on the address model
+                    ->label('Full Name')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('phone')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('home')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                Tables\Columns\TextColumn::make('street')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+
+                Tables\Columns\TextColumn::make('block')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 //
@@ -61,8 +85,10 @@ class AddressRelationManager extends RelationManager
                 Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
