@@ -17,6 +17,16 @@ class LatestOrders extends BaseWidget
 
     protected int | string | array $columnSpan = 'full';
 
+    /**
+     * Make the widget take the second widget of the dashboard page.
+     */
+
+    protected static ?int $sort = 2;
+
+    /**
+     * Define the widget's table.
+     */
+
     public function table(Table $table): Table
     {
         return $table
