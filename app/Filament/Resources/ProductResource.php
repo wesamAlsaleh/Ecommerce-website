@@ -93,6 +93,7 @@ class ProductResource extends Resource
                         TextInput::make('price')
                             ->label('Price')
                             ->numeric()
+                            ->minValue(0.1)
                             ->prefix('BHD')
                             ->placeholder('Enter the product price')
                             ->required(),
@@ -122,7 +123,7 @@ class ProductResource extends Resource
                         Toggle::make('in_stock')
                             ->label('In stock')
                             ->required()
-                            ->default(false),
+                            ->default(true),
 
                         Toggle::make('is_active')
                             ->label('Active')

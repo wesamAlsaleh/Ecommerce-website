@@ -79,7 +79,8 @@ class BrandResource extends Resource
                 ImageColumn::make('logo'),
 
                 TextColumn::make('slug')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 IconColumn::make('is_active')
                     ->boolean(),

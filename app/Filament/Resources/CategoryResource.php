@@ -56,6 +56,7 @@ class CategoryResource extends Resource
                             ->maxLength(255)
                             ->required()
                             ->unique(Category::class, 'slug', ignoreRecord: true), // (category class, column name) => `unique validation rule`, also ignore to check if its unique if its in the edit mode
+
                     ]),
 
                     FileUpload::make('image')
@@ -81,7 +82,8 @@ class CategoryResource extends Resource
                 ImageColumn::make('image'),
 
                 TextColumn::make('slug')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 IconColumn::make('is_active')
                     ->boolean(),
