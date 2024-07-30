@@ -1,6 +1,5 @@
 <?php
 
-
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -16,7 +15,12 @@ use App\Livewire\CategoriesPage;
 
 // Import the ProductsPage
 use App\Livewire\ProductsPage;
-use Illuminate\Routing\RouteGroup;
+
+// Import the CartPage
+use App\Livewire\CartPage;
+
+// Import the ProductDetailPage
+use App\Livewire\ProductDetailPage;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +38,7 @@ use Illuminate\Routing\RouteGroup;
 Route::get('/', HomePage::class);
 Route::get('/categories', CategoriesPage::class);
 Route::get('/products', ProductsPage::class);
+Route::get('/cart', CartPage::class);
+
+
+Route::get('/cart/{product}', ProductDetailPage::class);
