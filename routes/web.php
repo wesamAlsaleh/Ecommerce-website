@@ -16,6 +16,7 @@ use App\Livewire\CategoriesPage;
 
 // Import the ProductsPage
 use App\Livewire\ProductsPage;
+use Illuminate\Routing\RouteGroup;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,8 +29,8 @@ use App\Livewire\ProductsPage;
 |
 */
 
+
+// home page routes
 Route::get('/', HomePage::class);
-
 Route::get('/categories', CategoriesPage::class);
-
 Route::get('/products', ProductsPage::class);
