@@ -45,6 +45,8 @@ class User extends Authenticatable
     ];
 
 
+
+
     // Relationships for User
 
     // User has many orders

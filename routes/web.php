@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
  * then use them in the routes.web.php file !
  */
 
-// Import the HomePage 
+// Import the HomePage
 use App\Livewire\HomePage;
 
 // Import the CategoriesPage
@@ -38,7 +38,7 @@ use App\Livewire\Auth\Register;
 use App\Livewire\Auth\ResetPasswordPage;
 use App\Livewire\Auth\ForgotPage;
 
-// Import the success and cancel payment pages
+// Import the success and canceled payment pages
 use App\Livewire\CancelPage;
 use App\Livewire\SuccessPage;
 
