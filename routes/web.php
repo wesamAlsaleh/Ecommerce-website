@@ -22,6 +22,9 @@ use App\Livewire\CartPage;
 // Import the ProductDetailPage
 use App\Livewire\ProductDetailPage;
 
+// Import the CheckoutPage
+use App\Livewire\CheckoutPage;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,7 +41,10 @@ use App\Livewire\ProductDetailPage;
 Route::get('/', HomePage::class);
 Route::get('/categories', CategoriesPage::class);
 Route::get('/products', ProductsPage::class);
+
+// cart pages routes
 Route::get('/cart', CartPage::class);
+Route::get('/checkout', CheckoutPage::class);
 
 // product detail page route
 Route::get('/products/{product}', ProductDetailPage::class);
