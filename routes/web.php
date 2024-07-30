@@ -24,7 +24,7 @@ use App\Livewire\ProductDetailPage;
 
 // Import the CheckoutPage
 use App\Livewire\CheckoutPage;
-
+use App\Livewire\MyOrderDetailsPage;
 // Import the MyOrdersPage
 use App\Livewire\MyOrdersPage;
 
@@ -57,4 +57,4 @@ Route::get('/products/{product}', ProductDetailPage::class);
 
 // orders pages routes
 Route::get('/my-orders', MyOrdersPage::class);
-Route::get('/my-orders/{order}', MyOrdersPage::class);
+Route::get('/my-orders/{order}', MyOrderDetailsPage::class);
