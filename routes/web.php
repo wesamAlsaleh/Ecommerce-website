@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -10,6 +11,11 @@ use Illuminate\Support\Facades\Route;
 // Import the HomePage 
 use App\Livewire\HomePage;
 
+// Import the CategoriesPage
+use App\Livewire\CategoriesPage;
+
+// Import the ProductsPage
+use App\Livewire\ProductsPage;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +29,7 @@ use App\Livewire\HomePage;
 */
 
 Route::get('/', HomePage::class);
+
+Route::get('/categories', CategoriesPage::class);
+
+Route::get('/products', ProductsPage::class);
