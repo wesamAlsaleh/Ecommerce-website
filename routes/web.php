@@ -66,7 +66,7 @@ Route::get('/checkout', CheckoutPage::class);
 
 // products pages route
 Route::get('/products', ProductsPage::class);
-Route::get('/products/{product}', ProductDetailPage::class);
+Route::get('/products/{slug}', ProductDetailPage::class);
 
 // orders pages routes
 Route::get('/my-orders', MyOrdersPage::class);
