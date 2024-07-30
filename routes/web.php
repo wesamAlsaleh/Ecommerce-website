@@ -66,11 +66,11 @@ Route::get('/checkout', CheckoutPage::class);
 
 // products pages route
 Route::get('/products', ProductsPage::class);
-Route::get('/products/{slug}', ProductDetailPage::class);
+Route::get('/products/{slug}', ProductDetailPage::class); // {slug} so i can mount the component with the slug from the URL
 
 // orders pages routes
 Route::get('/my-orders', MyOrdersPage::class);
-Route::get('/my-orders/{order}', MyOrderDetailsPage::class);
+Route::get('/my-orders/{order}', MyOrderDetailsPage::class); // {order} so i can mount the component with the order from the URL
 
 // auth routes
 Route::get('/login', Login::class);
