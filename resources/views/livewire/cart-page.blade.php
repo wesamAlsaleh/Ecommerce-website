@@ -6,37 +6,41 @@
                 <div class="bg-white overflow-x-auto rounded-lg shadow-md p-6 mb-4">
                     <table class="w-full">
                         <thead>
-                            <tr>
-                                <th class="text-left font-semibold">Product</th>
-                                <th class="text-left font-semibold">Price</th>
-                                <th class="text-left font-semibold">Quantity</th>
-                                <th class="text-left font-semibold">Total</th>
-                                <th class="text-left font-semibold">Remove</th>
-                            </tr>
+                        <tr>
+                            <th class="text-left font-semibold">Product</th>
+                            <th class="text-left font-semibold">Price</th>
+                            <th class="text-left font-semibold">Quantity</th>
+                            <th class="text-left font-semibold">Total</th>
+                            <th class="text-left font-semibold">Remove</th>
+                        </tr>
+
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <img class="h-16 w-16 mr-4" src="https://via.placeholder.com/150"
-                                            alt="Product image">
-                                        <span class="font-semibold">Product name</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">$19.99</td>
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <button class="border rounded-md py-2 px-4 mr-2">-</button>
-                                        <span class="text-center w-8">1</span>
-                                        <button class="border rounded-md py-2 px-4 ml-2">+</button>
-                                    </div>
-                                </td>
-                                <td class="py-4">$19.99</td>
-                                <td><button
-                                        class="bg-slate-300 border-2 border-slate-400 rounded-lg px-3 py-1 hover:bg-red-500 hover:text-white hover:border-red-700">Remove</button>
-                                </td>
-                            </tr>
-                            <!-- More product rows -->
+                        <tr>
+                            <td class="py-4">
+                                <div class="flex items-center">
+                                    <img class="h-16 w-16 mr-4" src="https://via.placeholder.com/150"
+                                         alt="Product image">
+                                    <span class="font-semibold">Product name</span>
+                                </div>
+                            </td>
+                            <td class="py-4">$19.99</td>
+                            <td class="py-4">
+                                <div class="flex items-center">
+                                    <button class="border rounded-md py-2 px-4 mr-2">-</button>
+                                    <span class="text-center w-8">1</span>
+                                    <button class="border rounded-md py-2 px-4 ml-2">+</button>
+                                </div>
+                            </td>
+                            <td class="py-4">$19.99</td>
+                            <td>
+                                <button
+                                    class="bg-slate-300 border-2 border-slate-400 rounded-lg px-3 py-1 hover:bg-red-500 hover:text-white hover:border-red-700">
+                                    Remove
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- More product rows -->
                         </tbody>
                     </table>
                 </div>
