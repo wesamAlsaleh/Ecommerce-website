@@ -16,8 +16,8 @@
 </head>
 
 <body class="bg-slate-200 dark:bg-slate-600">
-    {{ $slot }} {{-- to get the content of the component --}}
-
+    {{-- i think this slot is the children to get the content of the components --}}
+    {{ $slot }}
 </body>
 
 </html>
