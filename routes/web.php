@@ -2,7 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
-// Import the HomePage component
+/**
+ * Import the components from app/Livewire/*.php
+ * then use them in the routes.web.php file !
+ */
+
+// Import the HomePage 
 use App\Livewire\HomePage;
 
 
