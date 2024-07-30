@@ -192,6 +192,7 @@
         </div>
     </div>
 
+    {{-- TODO: change this section to something else --}}
     {{-- ************************************************* Customers section ************************************************* --}}
     <section class="py-14 font-poppins dark:bg-gray-800">
         <div class="max-w-6xl px-4 py-6 mx-auto lg:py-4 md:px-6">
