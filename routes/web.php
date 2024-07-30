@@ -38,6 +38,10 @@ use App\Livewire\Auth\Register;
 use App\Livewire\Auth\ResetPasswordPage;
 use App\Livewire\Auth\ForgotPage;
 
+// Import the success and cancel payment pages
+use App\Livewire\CancelPage;
+use App\Livewire\SuccessPage;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -73,3 +77,7 @@ Route::get('/login', Login::class);
 Route::get('/register', Register::class);
 Route::get('/reset-password', ResetPasswordPage::class);
 Route::get('/forgot-password', ForgotPage::class);
+
+// success and cancel payment routes
+Route::get('/success', SuccessPage::class);
+Route::get('/cancel', CancelPage::class);
