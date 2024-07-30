@@ -4,7 +4,8 @@
         <div class="relative md:flex md:items-center md:justify-between">
             <div class="flex items-center justify-between">
                 <a class="flex-none text-xl font-semibold dark:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                    href="/" aria-label="Brand">My Shop
+                    href="/" aria-label="Brand" wire:navigate>
+                    My Shop
                 </a>
 
                 <div class="md:hidden">
@@ -73,7 +74,7 @@
 
                         <div class="pt-3 md:pt-0">
                             <a class="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                                href="/login" wire:navigate>
+                                href="/login">
 
                                 {{-- login icon --}}
                                 <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24"
