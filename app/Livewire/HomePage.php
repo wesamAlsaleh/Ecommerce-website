@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Brand;
+use App\Models\Category;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -24,9 +25,13 @@ class HomePage extends Component
         // Get all the brands that are active from the database
         $brands = Brand::where('is_active', 1)->get();
 
+        // Get all the categories that are active from the database
+        $categories = Category::where('is_active', 1)->get();
+
         // Render the view file from resources/views/livewire/home-page.blade.php
         return view('livewire.home-page', [
             'brands' => $brands, // Pass the brands to the view
+            'categories' => $categories, // Pass the categories to the view
         ]);
     }
 }
