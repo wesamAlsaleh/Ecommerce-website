@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -24,10 +25,18 @@ use App\Livewire\ProductDetailPage;
 
 // Import the CheckoutPage
 use App\Livewire\CheckoutPage;
-use App\Livewire\MyOrderDetailsPage;
+
 // Import the MyOrdersPage
 use App\Livewire\MyOrdersPage;
 
+// Import the MyOrderDetailsPage
+use App\Livewire\MyOrderDetailsPage;
+
+// Import auth pages
+use App\Livewire\Auth\Login;
+use App\Livewire\Auth\Register;
+use App\Livewire\Auth\ResetPasswordPage;
+use App\Livewire\Auth\ForgotPage;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,3 +67,9 @@ Route::get('/products/{product}', ProductDetailPage::class);
 // orders pages routes
 Route::get('/my-orders', MyOrdersPage::class);
 Route::get('/my-orders/{order}', MyOrderDetailsPage::class);
+
+// auth routes
+Route::get('/login', Login::class);
+Route::get('/register', Register::class);
+Route::get('/reset-password', ResetPasswordPage::class);
+Route::get('/forgot-password', ForgotPage::class);
