@@ -16,8 +16,19 @@
 </head>
 
 <body class="bg-slate-200 dark:bg-slate-600">
-    {{-- i think this slot is the children to get the content of the components --}}
-    {{ $slot }}
+
+    {{-- add the navbar --}}
+    @livewire('partials.navbar')
+
+    <main>
+        {{ $slot }} {{-- i think this slot is the children to get the content of the components --}}
+    </main>
+
+    {{-- add the footer --}}
+    @livewire('partials.footer')
+
+    {{-- to get the vite script --}}
+    @livewireScripts
 </body>
 
 </html>
