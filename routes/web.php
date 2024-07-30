@@ -40,5 +40,5 @@ Route::get('/categories', CategoriesPage::class);
 Route::get('/products', ProductsPage::class);
 Route::get('/cart', CartPage::class);
 
-
-Route::get('/cart/{product}', ProductDetailPage::class);
+// product detail page route
+Route::get('/products/{product}', ProductDetailPage::class);
