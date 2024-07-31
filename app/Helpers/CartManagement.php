@@ -5,6 +5,12 @@ namespace App\Helpers;
 use App\Models\Product;
 use Illuminate\Support\Facades\Cookie;
 
+/**
+ * FILEPATH: /C:/xampp/htdocs/playgroung/my-shop/app/Helpers/CartManagement.php
+ *
+ * The CartManagement class provides methods for managing a shopping cart using cookies.
+ * The cart items are stored as an array of objects in the cookie.
+ */
 class CartManagement
 {
     /**
