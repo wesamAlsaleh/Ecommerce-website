@@ -43,6 +43,9 @@ class ProductsPage extends Component
     #[Url] // change the page URL
     public $priceRange = 1000; // the price range for the products, also this is the default value which is the maximum price
 
+    #[Url] // change the page URL
+    public $sortBy = 'latest'; // the default sorting column for the products
+
     public function render()
     {
         // fetch all products that are active and in stock
@@ -78,6 +81,16 @@ class ProductsPage extends Component
         if ($this->priceRange) {
             $productQuery->whereBetween('price', [0, $this->priceRange]);
         }
+
+        // sort the fetched products by the selected sorting column (latest or price)
+        if ($this->sortBy === 'latest') {
+            $productQuery->latest(); // sort the products by the latest
+        } else if ($this->sortBy === 'lowFirst') {
+            $productQuery->orderBy('price'); // sort the products by the price (low to high)
+        } else if ($this->sortBy === 'highFirst') {
+            $productQuery->orderByDesc('price'); // sort the products by the price (high to low)
+        }
+
 
         return view('livewire.products-page', [
             'products' => $productQuery->paginate(9), // pass the products to the page, also enable to paginate the results to 9 per page `$products->links()`
