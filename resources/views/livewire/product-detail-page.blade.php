@@ -5,7 +5,7 @@
 
                 {{-- images container --}}
                 <div class="w-full mb-8 md:w-1/2 md:mb-0" x-data="{ mainImage: '{{ url('storage/' . $product->images[0]) }}' }">
-                    <div class="sticky top-0 z-50 overflow-hidden ">
+                    <div class="top-0 z-50 overflow-hidden">
                         {{-- the main image --}}
                         <div class="relative mb-6 lg:mb-10 lg:h-2/4 ">
                             <img x-bind:src="mainImage" alt="{{ $product->name }}"
