@@ -38,7 +38,17 @@ class ProductsPage extends Component
     #[Url] // change the page URL
     public $selectedBrands = [];
 
+    #[Url] // change the page URL
+    public $inStock; // if check box is checked, it will be 1, otherwise it will be null
 
+    #[Url] // change the page URL
+    public $onSale; // if check box is checked, it will be 1, otherwise it will be null
+
+    #[Url] // change the page URL
+    public $outOfStock; // if check box is checked, it will be 1, otherwise it will be null
+
+    #[Url] // change the page URL
+    public $priceRange = 100; // the price range for the products
 
     public function render()
     {
@@ -54,6 +64,21 @@ class ProductsPage extends Component
         // if the selected brands are not empty, then filter the fetched products by the selected brands
         if (!empty($this->selectedBrands)) {
             $productQuery->whereIn('brand_id', $this->selectedBrands);
+        }
+
+        // if the inStock is 1, then filter the fetched products by the inStock
+        if ($this->inStock) {
+            $productQuery->where('in_stock', 1);
+        }
+
+        // if the outOfStock is 1, then filter the fetched products by the outOfStock
+        if ($this->outOfStock) {
+            $productQuery->where('in_stock', 0);
+        }
+
+        // if the onSale is 1, then filter the fetched products by the onSale
+        if ($this->onSale) {
+            $productQuery->where('on_sale', 1);
         }
 
         return view('livewire.products-page', [

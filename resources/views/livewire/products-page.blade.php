@@ -52,16 +52,23 @@
                         <ul>
                             {{-- stock status --}}
                             <li class="mb-4">
-                                <label for="" class="flex items-center dark:text-gray-300">
-                                    <input type="checkbox" class="w-4 h-4 mr-2">
+                                <label for="inStock" class="flex items-center dark:text-gray-300">
+                                    <input type="checkbox" class="w-4 h-4 mr-2" wire:model.live='inStock'>
                                     <span class="text-lg dark:text-gray-400">In Stock</span>
+                                </label>
+                            </li>
+
+                            <li class="mb-4">
+                                <label for="inStock" class="flex items-center dark:text-gray-300">
+                                    <input type="checkbox" class="w-4 h-4 mr-2" wire:model.live='outOfStock'>
+                                    <span class="text-lg dark:text-gray-400">Out of Stock</span>
                                 </label>
                             </li>
 
                             {{-- sale status --}}
                             <li class="mb-4">
-                                <label for="" class="flex items-center dark:text-gray-300">
-                                    <input type="checkbox" class="w-4 h-4 mr-2">
+                                <label for="onSale" class="flex items-center dark:text-gray-300">
+                                    <input type="checkbox" class="w-4 h-4 mr-2" wire:model.live='onSale'>
                                     <span class="text-lg dark:text-gray-400">On Sale</span>
                                 </label>
                             </li>
@@ -70,15 +77,26 @@
 
                     {{-- price range container --}}
                     <div class="p-4 mb-5 bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-900">
-                        <h2 class="text-2xl font-bold dark:text-gray-400">Price</h2>
+                        {{-- range title --}}
+                        <h2 class="text-2xl font-bold dark:text-gray-400">
+                            Price {{ Number::currency($priceRange, 'BHD') }} -
+                            {{ Number::currency($priceRange + 500, 'BHD') }}
+                        </h2>
+
+                        {{-- the design --}}
                         <div class="w-16 pb-2 mb-6 border-b border-rose-600 dark:border-gray-400"></div>
+
+                        {{-- range slider --}}
                         <div>
                             <input type="range"
-                                class="w-full h-1 mb-4 bg-blue-100 rounded appearance-none cursor-pointer"
-                                max="500000" value="100000" step="100000">
-                            <div class="flex justify-between ">
-                                <span class="inline-block text-lg font-bold text-blue-400 ">&#8377; 1000</span>
-                                <span class="inline-block text-lg font-bold text-blue-400 ">&#8377; 500000</span>
+                                class="w-full h-2 mb-4 bg-blue-100 rounded appearance-none cursor-pointer"
+                                min="0" max="1000" value="500" step="10" id="priceRange">
+
+                            {{-- the bar --}}
+                            <div class="flex justify-between">
+                                <span class="inline-block text-lg font-bold text-blue-400">0</span>
+                                <span class="inline-block text-lg font-bold text-blue-400" id="currentValue">500</span>
+                                <span class="inline-block text-lg font-bold text-blue-400">1000</span>
                             </div>
                         </div>
                     </div>
