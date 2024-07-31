@@ -90,7 +90,7 @@ class ProductResource extends Resource
                             ->placeholder('Upload product images')
                             ->directory(function ($get) {
                                 $slug = $get('slug');
-                                return $slug ? "products/{$slug}" : 'products'; // store the images in a folder named after the product slug (if it exists), otherwise store them in a folder named 'products' 
+                                return $slug ? "products/{$slug}" : 'products'; // store the images in a folder named after the product slug (if it exists), otherwise store them in a folder named 'products'
                             })
                             ->maxFiles(5)
                             ->reorderable()
@@ -116,7 +116,7 @@ class ProductResource extends Resource
                             ->placeholder('Select the product category')
                             ->preload()
                             ->searchable()
-                            // ->options(fn () => \App\Models\Category::pluck('name', 'id')) // get the categories from the database to display in the select dropdown 
+                            // ->options(fn () => \App\Models\Category::pluck('name', 'id')) // get the categories from the database to display in the select dropdown
                             ->required()
                             ->relationship('category', 'name'), // get the category name from the database to display in the select dropdown (using the relationship method we created in the Product model)
 
@@ -152,7 +152,7 @@ class ProductResource extends Resource
                             ->default(false),
                     ]), //end of section 3
                 ])->columnSpan(1), //end of group 2
-            ])->columns(3); //end of form (3 columns, 2 in the first group, 1 in the second group) 
+            ])->columns(3); //end of form (3 columns, 2 in the first group, 1 in the second group)
     }
 
     public static function table(Table $table): Table
