@@ -79,8 +79,7 @@
                     <div class="p-4 mb-5 bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-900">
                         {{-- range title --}}
                         <h2 class="text-2xl font-bold dark:text-gray-400">
-                            Price {{ Number::currency($priceRange, 'BHD') }} -
-                            {{ Number::currency($priceRange + 500, 'BHD') }}
+                            Price
                         </h2>
 
                         {{-- the design --}}
@@ -88,14 +87,20 @@
 
                         {{-- range slider --}}
                         <div>
-                            <input type="range"
-                                class="w-full h-2 mb-4 bg-blue-100 rounded appearance-none cursor-pointer"
-                                min="0" max="1000" value="500" step="10" id="priceRange">
+                            {{-- the number above the range --}}
+                            <p class="font-semibold mb-2">
+                                {{ Number::currency(0, 'bhd') }}- {{ Number::currency($priceRange, 'bhd') }}
+                            </p>
 
-                            {{-- the bar --}}
+                            {{-- the range itself --}}
+                            <input type="range"
+                                class="w-full h-2 mb-4 mt-2 bg-blue-100 rounded appearance-none cursor-pointer"
+                                min="0" max="1000" value="priceRange" step="5" id="priceRange"
+                                wire:model.live='priceRange'>
+
+                            {{-- the bar   --}}
                             <div class="flex justify-between">
                                 <span class="inline-block text-lg font-bold text-blue-400">0</span>
-                                <span class="inline-block text-lg font-bold text-blue-400" id="currentValue">500</span>
                                 <span class="inline-block text-lg font-bold text-blue-400">1000</span>
                             </div>
                         </div>

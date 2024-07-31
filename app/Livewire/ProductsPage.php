@@ -28,13 +28,6 @@ class ProductsPage extends Component
     #[Url] // change the page URL
     public $selectedCategories = [];
 
-    /**
-     * The selected brands for the products page.
-     * by the help of wire:model.lazy, we can bind the selected brands to the input fields
-     *
-     * @var array
-     */
-
     #[Url] // change the page URL
     public $selectedBrands = [];
 
@@ -48,7 +41,7 @@ class ProductsPage extends Component
     public $outOfStock; // if check box is checked, it will be 1, otherwise it will be null
 
     #[Url] // change the page URL
-    public $priceRange = 100; // the price range for the products
+    public $priceRange = 1000; // the price range for the products, also this is the default value which is the maximum price
 
     public function render()
     {
@@ -79,6 +72,11 @@ class ProductsPage extends Component
         // if the onSale is 1, then filter the fetched products by the onSale
         if ($this->onSale) {
             $productQuery->where('on_sale', 1);
+        }
+
+        // get the products that are less than or equal to the price range
+        if ($this->priceRange) {
+            $productQuery->whereBetween('price', [0, $this->priceRange]);
         }
 
         return view('livewire.products-page', [
