@@ -46,20 +46,27 @@
                     <div class="lg:pl-20">
                         <div class="mb-8 [&>ul]:list-disc [&>ul]:ml-4">
                             {{-- product name --}}
-                            <h2 class="max-w-xl mb-6 text-2xl font-bold dark:text-gray-400 md:text-4xl">
-                                {{ $product->name }}
+                            <h2 class="max-w-xl mb-6  dark:text-gray-400 md:text-4xl">
+                                <span class="text-4xl font-bold">{{ $product->name }}</span>
                             </h2>
 
                             {{-- product price details --}}
-                            <p class="inline-block mb-6 text-4xl font-bold text-gray-700 dark:text-gray-400 ">
-                                {{-- after sale --}}
-                                <span>{{ Number::currency($product->price, 'BHD') }}</span>
+                            @php
+                                $stockStatus = $product->in_stock > 0 ? 'In Stock' : 'Out of Stock';
+                            @endphp
 
-                                {{-- before sale --}}
-                                {{-- <span
-                                    class="text-base font-normal text-gray-500 line-through dark:text-gray-400">$1800.99
-                                </span> --}}
-                            </p>
+                            <div class="inline-block mb-6">
+                                {{-- product price --}}
+                                <p class="text-2xl font-bold text-gray-700 dark:text-gray-400">
+                                    {{ Number::currency($product->price, 'BHD') }}
+                                </p>
+
+                                {{-- product availability --}}
+                                <p class="text-lg">
+                                    <span
+                                        class={{ $product->in_stock > 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }}>{{ $stockStatus }}</span>
+                                </p>
+                            </div>
 
                             {{-- product description --}}
                             <div class="max-w-md text-sm  dark:text-gray-400">
