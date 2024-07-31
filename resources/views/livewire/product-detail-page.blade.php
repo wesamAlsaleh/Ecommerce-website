@@ -62,10 +62,11 @@
                             </p>
 
                             {{-- product description --}}
-                            <p class="max-w-md text-gray-700 dark:text-gray-400">
+                            <div class="max-w-md text-sm  dark:text-gray-400">
+                                {{-- {{ $product->description }} --}}
                                 {{-- Convert Markdown to HTML --}}
                                 {!! Str::markdown($product->description) !!}
-                            </p>
+                            </div>
                         </div>
 
                         {{-- quantity section --}}

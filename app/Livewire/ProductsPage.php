@@ -25,7 +25,7 @@ class ProductsPage extends Component
             ->where('is_active', true);
 
         return view('livewire.products-page', [
-            'products' => $productQuery->paginate(6), // pass the products to the page, also enable to paginate the results to 6 per page `$products->links()`
+            'products' => $productQuery->paginate(9), // pass the products to the page, also enable to paginate the results to 9 per page `$products->links()`
             'brands' => Brand::where('is_active', 1)->get(), // fetch all active brands from the database
             'categories' => Category::where('is_active', 1)->get(), // fetch all active categories from the database
         ]);
