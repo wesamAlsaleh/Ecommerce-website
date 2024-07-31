@@ -16,11 +16,12 @@
                                 <li class="mb-4" wire:key={{ $category->id }}>
                                     <label for="{{ $category->slug }}" class="flex items-center dark:text-gray-400">
                                         <input type="checkbox" id="{{ $category->slug }}" value="{{ $category->id }}"
-                                            class="w-4 h-4 mr-2">
+                                            class="w-4 h-4 mr-2" wire:model.live="selectedCategories">
                                         <span class="text-lg">{{ $category->name }}</span>
                                     </label>
                                 </li>
                             @endforeach
+                            {{-- {{ json_encode($selectedCategories) }} --}}
                         </ul>
 
                     </div>
@@ -37,7 +38,7 @@
                                 <li class="mb-4" wire:key={{ $brand->id }}>
                                     <label for="{{ $brand->slug }}" class="flex items-center dark:text-gray-300">
                                         <input id="{{ $brand->slug }}" value="{{ $brand->id }}" type="checkbox"
-                                            class="w-4 h-4 mr-2">
+                                            class="w-4 h-4 mr-2" wire:model.live="selectedBrands">
                                         <span class="text-lg dark:text-gray-400">{{ $brand->name }}</span>
                                     </label>
                                 </li>
