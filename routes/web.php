@@ -73,7 +73,7 @@ Route::get('/my-orders', MyOrdersPage::class);
 // only guests can access this routes
 Route::middleware('guest')->group(function () {
     // auth routes
-    Route::get('/login', Login::class)->name('login');
+    Route::get('/login', Login::class)->name('login'); // name('login') to it when the user is restricted to access the page, it will redirect him to the login page by default (this is a Laravel feature)
     Route::get('/register', Register::class);
     Route::get('/reset-password', ResetPasswordPage::class);
     Route::get('/forgot-password', ForgotPage::class);
