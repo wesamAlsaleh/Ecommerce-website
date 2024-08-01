@@ -94,7 +94,7 @@
 
                                 {{-- the counter --}}
                                 <input type="number" readonly
-                                    class="flex items-center w-full font-semibold text-center text-gray-700 placeholder-gray-700 bg-gray-300 outline-none dark:text-gray-400 dark:placeholder-gray-400 dark:bg-gray-900 focus:outline-none text-md hover:text-black"
+                                    class="flex items-center w-full font-bold text-center text-gray-700 placeholder-gray-700 bg-gray-300 outline-none dark:text-gray-400 dark:placeholder-gray-400 dark:bg-gray-900 focus:outline-none text-md hover:text-black"
                                     placeholder="1" wire:model='quantity'>
 
                                 {{-- + button --}}
@@ -109,7 +109,7 @@
                         {{-- add to cart button --}}
                         <div class="flex flex-wrap items-center gap-4">
                             <button wire:click="addToCart({{ $product->id }})"
-                                class="w-full p-4 bg-blue-500 rounded-md lg:w-2/5 dark:text-gray-200 text-gray-50 hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700">
+                                class="w-full p-4 bg-blue-500 rounded-md lg:w-2/5 dark:text-gray-200 text-gray-50 hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700 font-bold">
 
                                 {{-- add to cart text --}}
                                 <span wire:loading.remove>
@@ -126,7 +126,8 @@
                                             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l1.737-1.032zm10-5.291a7.962 7.962 0 01-3 5.291l1.737 1.032C18.865 17.824 20 15.042 20 12h-4zm-2-5.291V4.062A7.962 7.962 0 0116 12h4c0-6.627-5.373-12-12-12z">
                                         </path>
                                     </svg>
-                                    {{-- <span>Adding to cart...</span> --}}
+
+                                    <span>Adding to cart</span>
                                 </span>
                             </button>
                         </div>
