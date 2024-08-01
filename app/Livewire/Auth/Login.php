@@ -20,7 +20,7 @@ class Login extends Component
         // validate the email and password fields
         $this->validate([
             'email' => 'required|email|exists:users,email',
-            'password' => 'required'
+            'password' => 'required|min:8',
         ]);
 
         // if the credentials are invalid then show an error message otherwise log the user in
