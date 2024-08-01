@@ -27,9 +27,9 @@ class Navbar extends Component
 
     // listen to the event to update the cart count
     #[On('update-cart-count')]
-    public function updateCartCount($count)
+    public function updateCartCount($numberOfProducts)
     {
-        $this->cartCount = $count; // this will update the cart count, it will be dynamic and will be updated when the event is fired
+        $this->cartCount = $numberOfProducts; // this will update the cart count, it will be dynamic and will be updated when the event is fired
     }
 
     public function render()

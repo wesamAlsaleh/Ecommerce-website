@@ -63,13 +63,13 @@ class ProductsPage extends Component
      */
     public function addToCart($product_id)
     {
-        // add the product to the cart
+        // add the product to the cart and get the number of products in the cart
         $numberOfProducts = CartManagement::addItemToCart($product_id);
 
         // send an event to update the cart count in the navbar
         $this->dispatch('update-cart-count', $numberOfProducts)->to(Navbar::class);
 
-        // show a success alert message using sweet alert package
+        // show a success alert message using sweet alert package (toaster)
         $this->alert('success', 'Product added to cart!', [
             'position' => 'bottom-end',
             'timer' => 3000,

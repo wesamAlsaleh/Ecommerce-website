@@ -93,12 +93,9 @@
 
                     {{-- brand title design --}}
                     <div class="flex w-40 mt-2 mb-6 overflow-hidden rounded">
-                        <div class="flex-1 h-2 bg-blue-200">
-                        </div>
-                        <div class="flex-1 h-2 bg-blue-400">
-                        </div>
-                        <div class="flex-1 h-2 bg-blue-600">
-                        </div>
+                        <div class="flex-1 h-2 bg-blue-200"></div>
+                        <div class="flex-1 h-2 bg-blue-400"></div>
+                        <div class="flex-1 h-2 bg-blue-600"></div>
                     </div>
                 </div>
 

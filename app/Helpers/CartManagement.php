@@ -83,6 +83,59 @@ class CartManagement
     }
 
 
+
+    /**
+     * Adds an item to the cart with a specified quantity.
+     *
+     * @param int $product_id The ID of the product to add to the cart.
+     * @param int $quantity The quantity of the product to add to the cart. Default is 1.
+     * @return int The total number of products in the cart after adding the item.
+     */
+    static public function addItemToCartWithQuantity($product_id, $quantity = 1)
+    {
+        // get all cart items from the cookie to check if the product is already in the cart
+        $cartItems = self::getCartItemsFromCookie(); // expects an array of cart items or an empty array if no cart items found
+
+        // check if the product is already in the cart
+        $existingItem = null;
+
+        foreach ($cartItems as $key => $item) {
+            // if the product is already in the cart, if the same product id is equal to the product id that we want to add to the cart then set the existingItem to the key of the item
+            if ($item['product_id'] == $product_id) {
+                $existingItem = $key; // store the key of the existing item, the key is the index of the item in the cartItems array
+                break;
+            }
+        }
+
+        // if the product is already in the cart then increase the quantity else add the product to the cart
+        if ($existingItem !== null) {
+            $cartItems[$existingItem]['quantity'] = $quantity; // increase the quantity of the product
+            $cartItems[$existingItem]['total'] =  $cartItems[$existingItem]['quantity'] * $cartItems[$existingItem]['price']; // calculate the total price of the product by multiplying the quantity by the price
+        } else {
+            // if the product is not in the cart then add the product to the cart
+            $product = Product::where('id', $product_id)->first(['id', 'name', 'price', 'images']); // get the product from the database by product_id
+
+            // if the product is found in the database then add the product to the cart
+            if ($product) {
+                $cartItems[] = [
+                    'product_id' => $product_id, // product id of the product that we want to add to the cart
+                    'name' => $product->name,
+                    'images' => $product->images[0], // get the first image of the product
+                    'quantity' => $quantity,
+                    'price' => $product->price,
+                    'total' => $product->price // total price of the product is the price of the product only since the quantity is 1
+                ]; // ex of the cart item: 0 => ['product_id' => $product_id, 'name' => 'product name', 'quantity' => 1, 'price' => 100, 'total' => 100]
+            }
+        }
+
+        // add the cart items to the cookie
+        self::addCartItemsToCookie($cartItems);
+
+        // return the total number of products in the cart
+        return count($cartItems);
+    }
+
+
     /**
      * Removes an item from the cart.
      *
