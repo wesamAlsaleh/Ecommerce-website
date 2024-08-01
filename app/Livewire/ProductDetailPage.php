@@ -6,7 +6,7 @@ use App\Models\Product;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Title('Product Detail')]
+// #[Title('Product Detail')]
 
 class ProductDetailPage extends Component
 {

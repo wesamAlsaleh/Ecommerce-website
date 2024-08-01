@@ -78,9 +78,13 @@
 
                         {{-- quantity section --}}
                         <div class="w-32 mb-8 ">
+                            {{-- the label and the underline design --}}
                             <label
-                                for=""class="w-full pb-1 text-xl font-semibold text-gray-700 border-b border-blue-300 dark:border-gray-600 dark:text-gray-400">Quantity</label>
+                                for=""class="w-full pb-1 text-xl font-semibold text-gray-700 border-b border-blue-300 dark:border-gray-600 dark:text-gray-400">
+                                Quantity
+                            </label>
 
+                            {{-- the quantity counter --}}
                             <div class="relative flex flex-row w-full h-10 mt-6 bg-transparent rounded-lg">
                                 {{-- - button --}}
                                 <button
@@ -106,7 +110,8 @@
                         <div class="flex flex-wrap items-center gap-4">
                             <button
                                 class="w-full p-4 bg-blue-500 rounded-md lg:w-2/5 dark:text-gray-200 text-gray-50 hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700">
-                                Add to cart</button>
+                                Add to cart
+                            </button>
                         </div>
                     </div>
                 </div>

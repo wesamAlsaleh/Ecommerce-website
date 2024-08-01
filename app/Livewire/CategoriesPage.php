@@ -10,7 +10,7 @@ use Livewire\Component;
  * Class CategoriesPage - A Livewire Component for displaying all categories
  */
 
-#[Title('Categories')]
+// #[Title('Categories')]
 
 class CategoriesPage extends Component
 {

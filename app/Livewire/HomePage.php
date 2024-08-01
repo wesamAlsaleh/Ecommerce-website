@@ -16,7 +16,7 @@ use Livewire\Component;
  * @param php attribute for $title
  * @return mixed the title of the component will be displayed in the title of the browser tab
  */
-#[Title('My shop')]
+// #[Title('My shop')]
 
 class HomePage extends Component
 {
