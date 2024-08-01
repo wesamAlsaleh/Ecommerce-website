@@ -12,11 +12,17 @@ use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+// import the LivewireAlert trait
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 // change the page title
 #[Title('All products')]
 
 class ProductsPage extends Component
 {
+
+
+    use LivewireAlert; // use the LivewireAlert trait to enable sweet alert package
 
     // use the WithPagination trait to enable pagination for the products list
     use WithPagination;
@@ -62,6 +68,14 @@ class ProductsPage extends Component
 
         // send an event to update the cart count in the navbar
         $this->dispatch('update-cart-count', $numberOfProducts)->to(Navbar::class);
+
+        // show a success alert message using sweet alert package
+        $this->alert('success', 'Product added to cart!', [
+            'position' => 'bottom-end',
+            'timer' => 3000,
+            'toast' => true,
+            'text' => '',
+        ]);
     }
 
     public function render()
