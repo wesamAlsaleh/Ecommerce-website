@@ -73,7 +73,7 @@ Route::get('/my-orders', MyOrdersPage::class);
 // only guests can access this routes
 Route::middleware('guest')->group(function () {
     // auth routes
-    Route::get('/login', Login::class);
+    Route::get('/login', Login::class)->name('login');
     Route::get('/register', Register::class);
     Route::get('/reset-password', ResetPasswordPage::class);
     Route::get('/forgot-password', ForgotPage::class);

@@ -131,7 +131,8 @@
                     {{-- if there is cart item then show the checkout button --}}
                     @if ($cartItems)
                         {{-- checkout button --}}
-                        <a href="/checkout" class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</a>
+                        <a href="/checkout"
+                            class="bg-blue-500 block text-center font-semibold text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</a>
                     @else
                         {{-- empty cart message --}}
                         <p class="text-center text-lg font-semibold mt-4 text-red-500">Your cart is empty</p>
