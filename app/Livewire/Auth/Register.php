@@ -12,6 +12,11 @@ class Register extends Component
     public $email;
     public $password;
 
+    /**
+     * Register a new user.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function register()
     {
         // Validate user input
