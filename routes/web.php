@@ -66,7 +66,7 @@ Route::get('/checkout', CheckoutPage::class);
 
 // products pages route
 Route::get('/products', ProductsPage::class);
-Route::get('/products/{slug}', ProductDetailPage::class); // {slug} so i can mount the component with the slug from the URL
+Route::get('/products/{slug}', ProductDetailPage::class); // {slug} is to pass the slug from the URL to the component under the hood of Livewire, before rendering the component itself taking the slug from the URL in ProductDetailPage.php
 
 // orders pages routes
 Route::get('/my-orders', MyOrdersPage::class);
