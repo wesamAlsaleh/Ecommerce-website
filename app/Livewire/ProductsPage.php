@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Helpers\CartManagement;
+use App\Livewire\Partials\Navbar;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -45,6 +47,16 @@ class ProductsPage extends Component
 
     #[Url] // change the page URL
     public $sortBy = 'latest'; // the default sorting column for the products
+
+
+    public function addToCart($product_id)
+    {
+        // add the product to the cart
+        $numberOfProducts = CartManagement::addItemToCart($product_id);
+
+        // show a success message as event to the user navbar
+        $this->dispatch('updateCartCount', $numberOfProducts)->to(Navbar::class);
+    }
 
     public function render()
     {

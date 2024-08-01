@@ -29,8 +29,8 @@ class CartManagement
      */
     static public function addItemToCart($product_id)
     {
-        // get all cart items from the cookie
-        $cartItems = self::getCartItemsFromCookie(); // expects an array of cart items
+        // get all cart items from the cookie to check if the product is already in the cart
+        $cartItems = self::getCartItemsFromCookie(); // expects an array of cart items or an empty array if no cart items found
 
         /**
          * this is how the cartItems array looks like `cartItems as index => object`
