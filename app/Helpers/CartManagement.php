@@ -67,7 +67,7 @@ class CartManagement
                 $cartItems[] = [
                     'product_id' => $product_id, // product id of the product that we want to add to the cart
                     'name' => $product->name,
-                    'images' => $product->images[0], // get the first image of the product
+                    'image' => $product->images[0], // get the first image of the product
                     'quantity' => 1,
                     'price' => $product->price,
                     'total' => $product->price // total price of the product is the price of the product only since the quantity is 1
@@ -120,7 +120,7 @@ class CartManagement
                 $cartItems[] = [
                     'product_id' => $product_id, // product id of the product that we want to add to the cart
                     'name' => $product->name,
-                    'images' => $product->images[0], // get the first image of the product
+                    'image' => $product->images[0], // get the first image of the product
                     'quantity' => $quantity,
                     'price' => $product->price,
                     'total' => $product->price // total price of the product is the price of the product only since the quantity is 1
@@ -272,16 +272,17 @@ class CartManagement
      * @param array $products An array of products in the cart.
      * @return float The total value of the products in the cart.
      */
-    static public function getCartTotal($products)
+    static public function getCartTotalPrice($products)
     {
         /**
-         * the $products array is an array of cart items that looks like this
+         * The $products array is an array of cart items that looks like this:
          * [
-         *  0 => ['product_id' => some product id, 'name' => 'product name', 'quantity' => number, 'price' => number, 'total' => number],
-         *  1 => ['product_id' => some product id, 'name' => 'product name', 'quantity' => number, 'price' => number, 'total' => number],
+         *   0 => ['product_id' => some product id, 'name' => 'product name', 'quantity' => number, 'price' => number, 'total' => number],
+         *   1 => ['product_id' => some product id, 'name' => 'product name', 'quantity' => number, 'price' => number, 'total' => number],
          * ]
          *
-         * the array_column function will return an sum value of the 'total' key from the $products array
+         * The array_column function will return an array of the 'total' values from the $products array.
+         * The array_sum function will then calculate the sum of these values.
          */
         return array_sum(array_column($products, 'total'));
     }
