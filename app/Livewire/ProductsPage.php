@@ -49,13 +49,19 @@ class ProductsPage extends Component
     public $sortBy = 'latest'; // the default sorting column for the products
 
 
+    /**
+     * Add a product to the cart.
+     *
+     * @param int $product_id The ID of the product to add to the cart.
+     * @return void
+     */
     public function addToCart($product_id)
     {
         // add the product to the cart
         $numberOfProducts = CartManagement::addItemToCart($product_id);
 
-        // show a success message as event to the user navbar
-        $this->dispatch('updateCartCount', $numberOfProducts)->to(Navbar::class);
+        // send an event to update the cart count in the navbar
+        $this->dispatch('update-cart-count', $numberOfProducts)->to(Navbar::class);
     }
 
     public function render()
