@@ -63,6 +63,30 @@ class CartPage extends Component
         ]);
     }
 
+    /**
+     * Increment the quantity of a product in the cart and update the total price.
+     *
+     * @param int $productId The ID of the product to increment the quantity for.
+     * @return void
+     */
+    public function incrementQuantity($productId)
+    {
+        $this->cartItems = CartManagement::increaseProductQuantity($productId);
+        $this->totalPrice = CartManagement::getCartTotalPrice($this->cartItems);
+    }
+
+    /**
+     * Decrement the quantity of a product in the cart and update the total price.
+     *
+     * @param int $productId The ID of the product to decrement the quantity for.
+     * @return void
+     */
+    public function decrementQuantity($productId)
+    {
+        $this->cartItems = CartManagement::decreaseProductQuantity($productId);
+        $this->totalPrice = CartManagement::getCartTotalPrice($this->cartItems);
+    }
+
     public function render()
     {
         return view('livewire.cart-page');

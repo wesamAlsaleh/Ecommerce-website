@@ -42,9 +42,20 @@
                                     {{-- product quantity --}}
                                     <td class="py-4">
                                         <div class="flex items-center">
-                                            <button class="border rounded-md py-2 px-4 mr-2" wire:click=''>-</button>
+                                            {{-- decreament btn --}}
+                                            <button class="border rounded-md py-2 px-4 mr-2"
+                                                wire:click="decrementQuantity({{ $item['product_id'] }})">
+                                                -
+                                            </button>
+
+                                            {{-- quantity --}}
                                             <span class="text-center w-8">{{ $item['quantity'] }}</span>
-                                            <button class="border rounded-md py-2 px-4 ml-2">+</button>
+
+                                            {{-- increment btn --}}
+                                            <button class="border rounded-md py-2 px-4 ml-2"
+                                                wire:click="incrementQuantity({{ $item['product_id'] }})">
+                                                +
+                                            </button>
                                         </div>
                                     </td>
 
