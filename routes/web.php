@@ -62,7 +62,6 @@ Route::get('/categories', CategoriesPage::class);
 
 // cart pages routes
 Route::get('/cart', CartPage::class);
-Route::get('/checkout', CheckoutPage::class);
 
 // products pages route
 Route::get('/products', ProductsPage::class);
@@ -70,14 +69,31 @@ Route::get('/products/{slug}', ProductDetailPage::class); // {slug} is to pass t
 
 // orders pages routes
 Route::get('/my-orders', MyOrdersPage::class);
-Route::get('/my-orders/{order}', MyOrderDetailsPage::class); // {order} so i can mount the component with the order from the URL
 
-// auth routes
-Route::get('/login', Login::class);
-Route::get('/register', Register::class);
-Route::get('/reset-password', ResetPasswordPage::class);
-Route::get('/forgot-password', ForgotPage::class);
+// only guests can access this routes
+Route::middleware('guest')->group(function () {
+    // auth routes
+    Route::get('/login', Login::class);
+    Route::get('/register', Register::class);
+    Route::get('/reset-password', ResetPasswordPage::class);
+    Route::get('/forgot-password', ForgotPage::class);
+});
 
-// success and cancel payment routes
-Route::get('/success', SuccessPage::class);
-Route::get('/cancel', CancelPage::class);
+// only authenticated users can access this routes
+Route::middleware('auth')->group(function () {
+    // logout route
+    Route::get('/logout', function () {
+        auth()->logout();
+        return redirect('/');
+    });
+
+    // my orders details route
+    Route::get('/my-orders/{order}', MyOrderDetailsPage::class); // {order} so i can mount the component with the order from the URL
+
+    // checkout route
+    Route::get('/checkout', CheckoutPage::class);
+
+    // success and failed payment routes
+    Route::get('/success', SuccessPage::class);
+    Route::get('/cancel', CancelPage::class);
+});
