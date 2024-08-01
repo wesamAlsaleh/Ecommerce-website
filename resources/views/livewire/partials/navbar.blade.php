@@ -15,6 +15,7 @@
                         class="hs-collapse-toggle flex justify-center items-center w-9 h-9 text-sm font-semibold rounded-lg border border-gray-200 text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                         data-hs-collapse="#navbar-collapse-with-animation"
                         aria-controls="navbar-collapse-with-animation" aria-label="Toggle navigation">
+
                         <svg class="hs-collapse-open:hidden flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg"
                             width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -22,6 +23,7 @@
                             <line x1="3" x2="21" y1="12" y2="12" />
                             <line x1="3" x2="21" y1="18" y2="18" />
                         </svg>
+
                         <svg class="hs-collapse-open:block hidden flex-shrink-0 w-4 h-4"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -41,21 +43,25 @@
                     <div
                         class="flex flex-col gap-x-0 mt-5 divide-y divide-dashed divide-gray-200 md:flex-row md:items-center md:justify-end md:gap-x-7 md:mt-0 md:ps-7 md:divide-y-0 md:divide-solid dark:divide-gray-700">
 
+                        {{-- home button --}}
                         <a class="font-bold {{ request()->is('/') ? 'text-blue-600' : 'text-gray-500' }} hover:text-gray-400 py-3 md:py-6 dark:text-blue-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 "
                             href="/" aria-current="page" wire:navigate>
                             Home
                         </a>
 
+                        {{-- categories button --}}
                         <a class="font-semibold {{ request()->is('categories') ? 'text-blue-600' : 'text-gray-500' }}  hover:text-gray-400 py-3 md:py-6 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 "
                             href="/categories" wire:navigate>
                             Categories
                         </a>
 
+                        {{-- products button --}}
                         <a class="font-semibold {{ request()->is('products') ? 'text-blue-600' : 'text-gray-500' }}  hover:text-gray-400 py-3 md:py-6 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 "
                             href="/products" wire:navigate>
                             Products
                         </a>
 
+                        {{-- cart button --}}
                         <a class="font-bold {{ request()->is('cart') ? 'text-blue-600' : 'text-gray-500' }} flex items-center  hover:text-gray-400 py-3 md:py-6 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                             href="/cart" wire:navigate>
                             {{-- cart icon --}}
@@ -75,23 +81,73 @@
                             </span>
                         </a>
 
-                        <div class="pt-3 md:pt-0">
-                            <a class="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                                href="/login">
+                        {{-- if not logged in show the login button --}}
+                        @guest
+                            {{-- login button --}}
+                            <div class="pt-3 md:pt-0">
+                                <a class="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                    href="/login">
 
-                                {{-- login icon --}}
-                                <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24"
-                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-                                    <circle cx="12" cy="7" r="4" />
-                                </svg>
+                                    {{-- login icon --}}
+                                    <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                                        <circle cx="12" cy="7" r="4" />
+                                    </svg>
 
-                                <span>
-                                    Log in
-                                </span>
-                            </a>
-                        </div>
+                                    <span>
+                                        Log in
+                                    </span>
+                                </a>
+                            </div>
+                        @endguest
+
+                        {{-- if logged in show the dropdown menu --}}
+                        @auth
+                            {{-- user dropdown options --}}
+                            <div
+                                class="hs-dropdown [--strategy:static] md:[--strategy:fixed] [--adaptive:none] md:[--trigger:hover] md:py-4">
+                                {{-- user name for the navbar --}}
+                                <button type="button"
+                                    class="flex items-center w-full text-gray-500 hover:text-gray-400 font-medium dark:text-gray-400 dark:hover:text-gray-500">
+
+                                    {{-- the user name for the navbar --}}
+                                    {{ auth()->user()->name }}
+
+                                    {{-- dropdown icon 'arrow down' --}}
+                                    <svg class="ms-2 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="m6 9 6 6 6-6" />
+                                    </svg>
+                                </button>
+
+                                {{-- dropdown menu --}}
+                                <div
+                                    class="hs-dropdown-menu transition-[opacity,margin] duration-[0.1ms] md:duration-[150ms] hs-dropdown-open:opacity-100 opacity-0 md:w-48 hidden z-10 bg-white md:shadow-md rounded-lg p-2 dark:bg-gray-800 md:dark:border dark:border-gray-700 dark:divide-gray-700 before:absolute top-full md:border before:-top-5 before:start-0 before:w-full before:h-5">
+
+                                    {{-- my orders option --}}
+                                    <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                        href="#">
+                                        My Orders
+                                    </a>
+
+                                    {{-- profile option --}}
+                                    <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                        href="#">
+                                        My Account
+                                    </a>
+
+                                    {{-- logout option --}}
+                                    <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                        href="/logout">
+                                        Logout
+                                    </a>
+                                </div>
+                            </div>
+                        @endauth
+
                     </div>
                 </div>
             </div>
