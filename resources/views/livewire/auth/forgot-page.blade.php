@@ -20,7 +20,8 @@
 
                     <div class="mt-5">
                         <!-- Form -->
-                        <form wire:submit='requestReset'>
+                        <form wire:submit.prevent='requestReset'>
+                            {{-- @csrf --}}
                             <div class="grid gap-y-4">
                                 <!-- email field -->
                                 <div>
@@ -30,9 +31,9 @@
                                     </label>
 
                                     <div class="relative">
-                                        <input type="email" id="email" wire:model="email"
+                                        <input type="email" id="email"
                                             class="py-3 px-4 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
-                                            aria-describedby="email-error">
+                                            aria-describedby="email-error" wire:model='email'>
 
                                         {{-- '!' tag --}}
                                         @error('email')
@@ -58,11 +59,12 @@
 
                                 {{-- submit button --}}
                                 <button type="submit"
-                                    class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Reset
-                                    password
+                                    class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                                    Reset password
                                 </button>
                             </div>
                         </form>
+
                         <!-- End Form -->
                     </div>
                 </div>
