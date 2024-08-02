@@ -13,7 +13,7 @@ class OrderPlaced extends Mailable
 {
     use Queueable, SerializesModels;
 
-    // Define the order property to hold the order as object from the placed order live wire controller
+    // Define the order property to hold the order as object, its from the checkout page after the order has been placed
     public $order;
 
     /**

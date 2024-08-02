@@ -3,8 +3,10 @@
 namespace App\Livewire;
 
 use App\Helpers\CartManagement;
+use App\Mail\OrderPlaced;
 use App\Models\Address;
 use App\Models\Order;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
@@ -43,15 +45,16 @@ class CheckoutPage extends Component
         }
     }
 
+
     /**
      * Place an order.
      *
-     * This method validates the user input, sanitizes the input values, retrieves cart items from the cookie,
-     * calculates the line items for the Stripe payment, creates a new order in the database, sets order details,
-     * creates a new address in the database, sets address details, checks the payment method to redirect the user
-     * to the payment gateway or show a success message, saves the order and address in the database, creates order
-     * items in the database, clears the cart items from the cookie, and redirects the user to the payment gateway
-     * or success page.
+     * This method is responsible for validating the user input, sanitizing the input values, retrieving cart items from the cookie,
+     * calculating the total price of the cart items with tax, creating a new order in the database, setting order details,
+     * creating a new address in the database, setting address details, checking the payment method to redirect the user to the payment gateway or show a success message,
+     * saving the order and address in the database, creating order items in the database using the relationship in the Order model,
+     * clearing the cart items from the cookie, sending an email to the user to notify them that the order has been placed,
+     * and redirecting the user to the payment gateway or success page.
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -164,6 +167,9 @@ class CheckoutPage extends Component
 
         // Clear the cart items from the cookie
         CartManagement::clearCartItemsFromCookie();
+
+        // Send an email to the user to notify them that the order has been placed
+        Mail::to(request()->user())->send(new OrderPlaced($order)); // send the order to the OrderPlaced mail component (livewire controller)
 
         // Redirect the user to the payment gateway or success page
         return redirect($redirectUrl);
