@@ -168,8 +168,8 @@ class CheckoutPage extends Component
         // Clear the cart items from the cookie
         CartManagement::clearCartItemsFromCookie();
 
-        // Send an email to the user to notify them that the order has been placed
-        Mail::to(request()->user())->send(new OrderPlaced($order)); // send the order to the OrderPlaced mail component (livewire controller)
+        // Send an email to the user to notify them that the order has been placed 🔴
+        // Mail::to(request()->user())->send(new OrderPlaced($order)); // send the order to the OrderPlaced mail component (livewire controller)
 
         // Redirect the user to the payment gateway or success page
         return redirect($redirectUrl);
