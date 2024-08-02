@@ -98,5 +98,5 @@ Route::middleware('auth')->group(function () {
 
     // success and failed payment routes
     Route::get('/success', SuccessPage::class)->name('success');
-    Route::get('/cancel', CancelPage::class)->name('failed');
+    Route::get('/cancel', CancelPage::class)->name('cancel');
 });

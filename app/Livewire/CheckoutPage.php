@@ -87,11 +87,11 @@ class CheckoutPage extends Component
 
         foreach ($cartItems as $item) {
 
-            $unitPriceWithTaxAmount = $item['price'] * 0.1; // the tax is 10% of the item price
+            $unitPriceWithTaxAmount = $item['price'] * 1.1 * 1000; // the tax is 10% of the item price, multiplied by 1000 to convert to the smallest currency unit
             $lineItems[] = [
                 'price_data' => [
                     'currency' => 'bhd',
-                    'unit_amount' => $unitPriceWithTaxAmount,
+                    'unit_amount' => (int)$unitPriceWithTaxAmount, // Convert to integer to remove the decimal point and round the number to the nearest whole number (stripe requirement)
                     'product_data' => [
                         'name' => $item['name'],
                     ],
@@ -141,7 +141,7 @@ class CheckoutPage extends Component
                 'line_items' => $lineItems, // items in the cart
                 'mode' => 'payment', // payment mode
                 'success_url' => route('success') . '?session_id={CHECKOUT_SESSION_ID}', // success url
-                'cancel_url' => route('failed'), // failed url is the cancel url in the route file
+                'cancel_url' => route('cancel'), // failed url is the cancel url in the route file
             ]);
 
             // Redirect the user to the stripe checkout page using the stripe session url from the stripe response (built-in stripe feature)
