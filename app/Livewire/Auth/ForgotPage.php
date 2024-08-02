@@ -10,22 +10,18 @@ class ForgotPage extends Component
 
     public $email;
 
-    /**
-     * Handle the request for resetting the password.
-     *
-     * @return void
-     */
-    public function requestReset()
+    public function sendResetLink()
     {
         $this->validate([
-            'email' => 'required|email|exists:users,email',
+            'email' => 'required|email',
         ]);
 
         $status = Password::sendResetLink(['email' => $this->email]);
 
         if ($status === Password::RESET_LINK_SENT) {
-            session()->flash('success', 'Password reset link sent to your email.');
-            $this->email = '';
+            session()->flash('success', 'Reset password link sent successfully.');
+        } else {
+            session()->flash('error', 'Unable to send reset password link.');
         }
     }
 

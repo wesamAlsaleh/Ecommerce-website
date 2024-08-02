@@ -16,11 +16,18 @@
                                 Sign in here
                             </a>
                         </p>
+
+                        @if (session('error'))
+                            <div class="mt-2 bg-yellow-500 text-sm text-white rounded-lg p-4" role="alert"
+                                tabindex="-1" aria-labelledby="hs-solid-color-warning-label">
+                                {{ session('error') }}
+                            </div>
+                        @endif
                     </div>
 
                     <div class="mt-5">
                         <!-- Form -->
-                        <form wire:submit.prevent='requestReset'>
+                        <form wire:submit.prevent='sendResetLink'>
                             {{-- @csrf --}}
                             <div class="grid gap-y-4">
                                 <!-- email field -->
