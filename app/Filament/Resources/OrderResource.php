@@ -183,7 +183,9 @@ class OrderResource extends Resource
                                     ->columnSpan(4),
                             ])->columns(12), // End Repeater schema (Order items)
 
-                        Placeholder::make('total_price')
+
+                        // the total price of the order under the order items repeater
+                        Placeholder::make('Order total price:')
                             ->content(function (Get $get, Set $set) {
                                 $totalPrice = 0;
 
