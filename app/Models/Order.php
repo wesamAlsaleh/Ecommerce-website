@@ -11,7 +11,7 @@ class Order extends Model
 
     protected $fillable = [
         'user_id',
-        'total', // i think this is the unit amount of the order
+        'total', // total price of the order
         'payment_method',
         'payment_status',
         'status',

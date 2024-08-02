@@ -63,7 +63,7 @@ class OrderResource extends Resource
                                 // 'paypal' => 'Paypal',
                                 // 'credit_card' => 'Credit Card',
                                 'stripe' => 'Stripe',
-                                'cash on delivery' => 'Cash on delivery',
+                                'cashOnDelivery' => 'Cash on delivery',
                             ])
                             ->required()
                             ->label('Payment method')
@@ -181,7 +181,7 @@ class OrderResource extends Resource
                                     ->disabled()
                                     ->dehydrated()
                                     ->columnSpan(4),
-                            ])->columns(12), // End Repeater schema (Order items) 
+                            ])->columns(12), // End Repeater schema (Order items)
 
                         Placeholder::make('total_price')
                             ->content(function (Get $get, Set $set) {
@@ -194,7 +194,7 @@ class OrderResource extends Resource
 
                                 // loop through the order items and get the total price of the order
                                 foreach ($repeaterItems as $repeaterItem => $value) {
-                                    $totalPrice += $get("orderItems.{$repeaterItem}.total"); // get the total price of the product in the order  
+                                    $totalPrice += $get("orderItems.{$repeaterItem}.total"); // get the total price of the product in the order
                                 }
 
 
@@ -219,7 +219,7 @@ class OrderResource extends Resource
         return $table
             ->defaultSort('created_at', 'desc') // Sort by created_at column in descending order
             ->columns([
-                TextColumn::make('user.name') // powered by the user relationship in the order model 
+                TextColumn::make('user.name') // powered by the user relationship in the order model
                     ->sortable()
                     ->searchable()
                     ->label('Customer'),
@@ -298,7 +298,7 @@ class OrderResource extends Resource
     public static function getRelations(): array
     {
         return [
-            AddressRelationManager::class, // add the address relation manager to the order resource 
+            AddressRelationManager::class, // add the address relation manager to the order resource
         ];
     }
 
@@ -307,7 +307,7 @@ class OrderResource extends Resource
      */
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::count(); // get the total number of orders in the database and display it in the navigation badge 
+        return static::getModel()::count(); // get the total number of orders in the database and display it in the navigation badge
     }
 
     /**

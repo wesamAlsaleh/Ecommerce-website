@@ -20,12 +20,12 @@
                         </h2>
 
                         {{-- success message --}}
-                        @if (session()->has('message'))
+                        {{-- @if (session()->has('message'))
                             <div class="mt-2 bg-green-500 text-sm text-white rounded-lg p-4 mb-4" role="alert"
                                 tabindex="-1" aria-labelledby="hs-solid-color-success-label">
                                 {{ session('message') }}
                             </div>
-                        @endif
+                        @endif --}}
 
                         {{-- form --}}
                         <div class="grid grid-cols-2 gap-4">
@@ -108,11 +108,11 @@
                     <ul class="grid w-full gap-6 md:grid-cols-2">
                         {{-- cash on delivery option --}}
                         <li>
-                            <input class="hidden peer" id="cashonDelivery" name="cashonDelivery" required=""
-                                type="radio" value="cashonDelivery" wire:model='paymentMethod' />
+                            <input class="hidden peer" id="cashOnDelivery" required="" type="radio"
+                                value="cashOnDelivery" wire:model='paymentMethod' />
                             <label
                                 class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
-                                for="cashonDelivery">
+                                for="cashOnDelivery">
                                 <div class="block">
                                     <div class="w-full text-lg font-semibold">
                                         Cash on Delivery
@@ -129,7 +129,7 @@
 
                         {{-- stripe option --}}
                         <li>
-                            <input class="hidden peer" id="stripe" name="stripe" type="radio" value="stripe"
+                            <input class="hidden peer" id="stripe" type="radio" value="stripe"
                                 wire:model='paymentMethod'>
                             <label
                                 class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
