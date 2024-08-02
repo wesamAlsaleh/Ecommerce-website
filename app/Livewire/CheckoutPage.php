@@ -20,6 +20,29 @@ class CheckoutPage extends Component
     public $block;
     public $paymentMethod;
 
+
+
+    /**
+     * Mount the component.
+     *
+     * This method is called when the component is being mounted.
+     * It retrieves the cart items from the cookie and checks if there are any items in the cart.
+     * If there are no items in the cart, it redirects the user to the cart page.
+     *
+     * The purpose of this method is to prevent the user from accessing the checkout page if there are no items in the cart.
+     *
+     * @return \Illuminate\Http\RedirectResponse|null
+     */
+    public function mount()
+    {
+        // Get cart items from cookie
+        $cartItems = CartManagement::getCartItemsFromCookie();
+
+        if (count($cartItems) === 0) {
+            return redirect('/cart');
+        }
+    }
+
     /**
      * Place an order.
      *
