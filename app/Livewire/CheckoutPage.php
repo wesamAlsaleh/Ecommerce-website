@@ -93,7 +93,7 @@ class CheckoutPage extends Component
                     'currency' => 'bhd',
                     'unit_amount' => (int)$unitPriceWithTaxAmount, // Convert to integer to remove the decimal point and round the number to the nearest whole number (stripe requirement)
                     'product_data' => [
-                        'name' => $item['name'],
+                        'name' => $item['name'], // item name
                     ],
                 ],
                 'quantity' => $item['quantity'],
