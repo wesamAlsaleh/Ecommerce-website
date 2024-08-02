@@ -1,5 +1,5 @@
 <x-mail::message>
-    # Order Placed successfully 🎉
+    # Congratulations, Your order has been placed successfully 🎉
 
     <p>
         Thank you for placing your order with us. We are excited to let you know that your order has been successfully

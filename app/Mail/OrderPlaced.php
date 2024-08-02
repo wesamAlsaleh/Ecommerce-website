@@ -30,7 +30,7 @@ class OrderPlaced extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Order Placed successfully 🎉',
+            subject: 'Order Placed successfully!',
         );
     }
 
