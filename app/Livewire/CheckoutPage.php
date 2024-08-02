@@ -111,11 +111,7 @@ class CheckoutPage extends Component
         $order->user_id = auth()->id();
         $order->total = $totalPriceWithTax; // the tax is 10% of the total price
         $order->payment_method = $paymentMethod;
-        if ($paymentMethod === 'stripe') {
-            $order->payment_status = 'paid'; // payment is already paid in stripe
-        } else {
-            $order->payment_status = 'pending'; // pending until the payment is successful after the order is delivered
-        }
+        $order->payment_status = 'pending'; // pending until the payment is successful
         $order->status = 'pending'; // pending until the order is delivered
         $order->currency = 'BHD'; //TODO: remove hard coded currency
         $order->shipping_fee = 0; // free shipping
