@@ -13,12 +13,15 @@ class OrderPlaced extends Mailable
 {
     use Queueable, SerializesModels;
 
+    // Define the order property to hold the order as object from the placed order live wire controller
+    public $order;
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($order)
     {
-        //
+        $this->order =  $order; // Assign the order to the $order property
     }
 
     /**
@@ -27,17 +30,21 @@ class OrderPlaced extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Order Placed',
+            subject: 'Order Placed successfully 🎉',
         );
     }
 
     /**
      * Get the message content definition.
+     *  @return Content of the message from the markdown mailables file (resources/views/mail/orders/placed.blade.php)
      */
     public function content(): Content
     {
         return new Content(
             markdown: 'mail.orders.placed',
+            with: [
+                'url' => route('my-orders.show', $this->order), // route('my-orders.show') is the name of the route in routes/web.php
+            ]
         );
     }
 

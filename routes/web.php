@@ -91,7 +91,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // my orders details route
-    Route::get('/my-orders/{order}', MyOrderDetailsPage::class); // {order} so i can mount the component with the order from the URL
+    Route::get('/my-orders/{order}', MyOrderDetailsPage::class)->name('my-orders.show'); // {order} so i can mount the component with the order from the URL, my-orders.show is the name of the route to use it in the components (the placed mail component)
 
     // checkout route
     Route::get('/checkout', CheckoutPage::class);
