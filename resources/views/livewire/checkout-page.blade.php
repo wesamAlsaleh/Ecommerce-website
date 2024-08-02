@@ -109,7 +109,7 @@
                         {{-- cash on delivery option --}}
                         <li>
                             <input class="hidden peer" id="cashOnDelivery" required="" type="radio"
-                                value="cashOnDelivery" wire:model='paymentMethod' />
+                                value="cash on Delivery" wire:model='paymentMethod' />
                             <label
                                 class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
                                 for="cashOnDelivery">

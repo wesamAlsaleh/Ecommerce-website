@@ -124,7 +124,7 @@ class CheckoutPage extends Component
             // Redirect the user to the stripe checkout page using the stripe session url from the stripe response (built-in stripe feature)
             $redirectUrl = $sessionCheckout->url;
         } else {
-            route('success'); // redirect to the success page
+            $redirectUrl = route('success'); // redirect to the success page
         }
 
         // Save the order and address in the database
