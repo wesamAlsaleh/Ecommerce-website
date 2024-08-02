@@ -97,3 +97,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/success', SuccessPage::class);
     Route::get('/cancel', CancelPage::class);
 });
+
+// if some buttons route to /home redirect to /
+Route::redirect('/home', '/');
