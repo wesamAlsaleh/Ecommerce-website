@@ -112,8 +112,8 @@ class OrderResource extends Resource
                         Select::make('currency')  // expected to be string
                             ->options([
                                 'BHD' => 'BHD',
-                                'usd' => 'USD',
-                                'eur' => 'EUR',
+                                // 'usd' => 'USD',
+                                // 'eur' => 'EUR',
                             ])
                             ->default('BHD')
                             ->label('Currency')
@@ -185,7 +185,8 @@ class OrderResource extends Resource
 
 
                         // the total price of the order under the order items repeater
-                        Placeholder::make('Order total price:')
+                        Placeholder::make('total')
+                            ->label('Order total price (including VAT):')
                             ->content(function (Get $get, Set $set) {
                                 $totalPrice = 0;
 
@@ -199,6 +200,12 @@ class OrderResource extends Resource
                                     $totalPrice += $get("orderItems.{$repeaterItem}.total"); // get the total price of the product in the order
                                 }
 
+
+                                // calculate the VAT amount (10% of the total price)
+                                $vatAmount = $totalPrice * 0.1;
+
+                                // add the VAT amount to the total price
+                                $totalPrice += $vatAmount;
 
                                 // return the total price of the order to the hidden field
                                 $set('total', $totalPrice);

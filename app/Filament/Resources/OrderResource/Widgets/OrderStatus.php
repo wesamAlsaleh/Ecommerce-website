@@ -16,7 +16,7 @@ class OrderStatus extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Pending Orders', Order::query()->where('status', 'pending')->count()),  // get the count of orders with status pending    
+            Stat::make('Pending Orders', Order::query()->where('status', 'pending')->count()),  // get the count of orders with status pending
             Stat::make('Shipped Orders', Order::query()->where('status', 'shipped')->count()), // get the count of orders with status shipped
             Stat::make('Delivered Orders', Order::query()->where('status', 'delivered')->count()), // get the count of orders with status delivered
             Stat::make('Total net profit', Number::currency(Order::query()->sum('total'), 'BHD')), // get the total price of all orders

@@ -103,13 +103,17 @@ class CheckoutPage extends Component
         // Create a new order in the database
         $order = new Order();
 
+        // calculate the total price of the cart items with tax
+        $totalPrice = CartManagement::getCartTotalPrice($cartItems);
+        $totalPriceWithTax = $totalPrice * 1.1; // the tax is 10% of the total price
+
         // Set order details
         $order->user_id = auth()->id();
-        $order->total = (CartManagement::getCartTotalPrice($cartItems) * 0.1); // the tax is 10% of the total price
+        $order->total = $totalPriceWithTax; // the tax is 10% of the total price
         $order->payment_method = $paymentMethod;
         $order->payment_status = 'pending'; // pending until payment is successful
         $order->status = 'pending'; // pending until the order is delivered
-        $order->currency = 'bhd'; //TODO: remove hard coded currency
+        $order->currency = 'BHD'; //TODO: remove hard coded currency
         $order->shipping_fee = 0; // free shipping
         $order->shipping_method = 'standard'; // standard shipping
         $order->notes = 'Order placed by' . auth()->user()->name; // order placed by the `user name`
