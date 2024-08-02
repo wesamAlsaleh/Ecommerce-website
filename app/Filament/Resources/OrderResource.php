@@ -266,6 +266,7 @@ class OrderResource extends Resource
                     ->sortable(),
 
                 SelectColumn::make('status')
+                    ->label('Order status')
                     ->options([
                         'pending' => 'Pending',
                         'shipped' => 'Shipped',
