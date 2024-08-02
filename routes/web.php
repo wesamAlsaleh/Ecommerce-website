@@ -57,6 +57,9 @@ use App\Livewire\SuccessPage;
 // home page route
 Route::get('/', HomePage::class);
 
+// if some buttons route to /home redirect to /
+Route::redirect('/home', '/');
+
 // categories pages route
 Route::get('/categories', CategoriesPage::class);
 
@@ -97,6 +100,3 @@ Route::middleware('auth')->group(function () {
     Route::get('/success', SuccessPage::class);
     Route::get('/cancel', CancelPage::class);
 });
-
-// if some buttons route to /home redirect to /
-Route::redirect('/home', '/');
