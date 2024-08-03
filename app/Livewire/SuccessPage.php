@@ -17,7 +17,6 @@ class SuccessPage extends Component
     // Get the session ID from the URL
     public function mount(Request $request)
     {
-
         $this->sessionId = $request->query('session_id');
     }
 
@@ -26,7 +25,7 @@ class SuccessPage extends Component
         // Get the latest order of the authenticated user using the Order model 'address' relationship method
         $latestOrder = Order::with('address')->where('user_id', auth()->id())->latest()->first();
 
-        // Get the session info from Stripe using the session ID
+        // Get the session info from Stripe using the session ID to update the payment status of the latest order
         if ($this->sessionId) {
             Stripe::setApiKey(env('STRIPE_SECRET')); // set the stripe secret key
             $sessionInfo = Session::retrieve($this->sessionId); // get the session info from stripe by the session ID provided from the URL
@@ -40,9 +39,9 @@ class SuccessPage extends Component
 
                 // save the changes
                 $latestOrder->save();
-            } else if ($sessionInfo->payment_status != 'paid') {
-                // update the payment status of the latest order to 'failed'
-                $latestOrder->payment_status = 'failed';
+            } else {
+                $latestOrder->payment_status = 'failed'; // update the payment status of the latest order to 'failed'
+                $latestOrder->status = 'failed'; // update the status of the order to failed
 
                 // save the changes
                 $latestOrder->save();

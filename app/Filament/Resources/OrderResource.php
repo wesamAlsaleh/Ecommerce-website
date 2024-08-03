@@ -72,8 +72,8 @@ class OrderResource extends Resource
                         Select::make('payment_status') // expected to be string
                             ->options([
                                 'pending' => 'Pending',
-                                'paid' => 'Paid using stripe',
-                                'failed' => 'Failed using stripe, so the payment is cash on delivery',
+                                'paid' => 'Paid',
+                                'failed' => 'Declined',
                             ])
                             ->default('pending')
                             ->required()
