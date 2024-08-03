@@ -46,7 +46,7 @@
                     </div>
 
                     <!-- the white thing in SVG -->
-                    <div class="absolute bottom-0 start-0">
+                    {{-- <div class="absolute bottom-0 start-0">
                         <svg class="w-2/3 ms-auto h-auto text-white dark:text-slate-900" width="630" height="451"
                             viewBox="0 0 630 451" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect x="531" y="352" width="99" height="99" fill="currentColor" />
@@ -67,7 +67,7 @@
                             <rect x="507" y="124" width="49" height="24" fill="currentColor" />
                             <rect x="531" y="49" width="99" height="99" fill="currentColor" />
                         </svg>
-                    </div>
+                    </div> --}}
                     <!-- End SVG-->
                 </div>
                 <!-- End Col 2 (the images column)-->
@@ -179,10 +179,9 @@
 
                                 {{-- arrow icon --}}
                                 <div class="ps-3">
-                                    <svg class="flex-shrink-0 w-5 h-5" xmlns="http://www.w3.org/2000/svg"
-                                        width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
+                                    <svg class="flex-shrink-0 w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="m9 18 6-6-6-6" />
                                     </svg>
                                 </div>
