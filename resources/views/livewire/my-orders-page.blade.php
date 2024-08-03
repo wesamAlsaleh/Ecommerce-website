@@ -7,10 +7,10 @@
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                         <thead>
                             <tr>
-                                <th scope="col"
+                                {{-- <th scope="col"
                                     class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">
                                     Order Number
-                                </th>
+                                </th> --}}
 
                                 <th scope="col"
                                     class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">
@@ -44,10 +44,10 @@
                                 <tr wire:key='{{ $order->id }}'
                                     class="odd:bg-white even:bg-gray-100 dark:odd:bg-slate-900 dark:even:bg-slate-800">
                                     {{--   Order number  --}}
-                                    <td
+                                    {{-- <td
                                         class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
                                         {{ $order->id }}
-                                    </td>
+                                    </td> --}}
 
                                     {{-- order date --}}
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
