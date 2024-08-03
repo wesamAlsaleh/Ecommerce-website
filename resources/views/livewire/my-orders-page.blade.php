@@ -75,9 +75,9 @@
 
                                     {{-- link to order details --}}
                                     <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                                        <a href="#"
-                                            class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-slate-500">View
-                                            Details
+                                        <a href="/orders/{{ $order->id }}"
+                                            class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-slate-500">
+                                            View Details
                                         </a>
                                     </td>
                                 </tr>

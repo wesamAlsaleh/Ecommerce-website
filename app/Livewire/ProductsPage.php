@@ -80,7 +80,7 @@ class ProductsPage extends Component
 
     public function render()
     {
-        // fetch all products that are active and in stock
+        // fetch all products that are active
         $productQuery = Product::query()
             ->where('is_active', true);
 

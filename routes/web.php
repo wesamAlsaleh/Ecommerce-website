@@ -91,7 +91,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // my order details route
-    Route::get('/my-orders/{order}', MyOrderDetailsPage::class)->name('my-orders.show'); // (show the order details)
+    Route::get('/orders/{orderId}', MyOrderDetailsPage::class)->name('my-orders.show'); // (show the order details)
 
     // my orders route
     Route::get('/orders', MyOrdersPage::class);
