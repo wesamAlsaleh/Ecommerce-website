@@ -220,7 +220,6 @@
                     <span class="font-semibold">Order Total Price</span>
                     <span class="font-semibold">{{ Number::currency($unitPriceWithVat, 'bhd') }}</span>
                 </div>
-
             </div>
         </div>
     </div>
