@@ -1,10 +1,10 @@
-<section class="flex items-center font-poppins dark:bg-gray-800 ">
+<section class="flex items-center font-poppins dark:bg-gray-800 h-screen">
     <div
-        class="justify-center flex-1 max-w-6xl px-4 py-4 mx-auto bg-white border rounded-md dark:border-gray-900 dark:bg-gray-900 md:py-10 md:px-10">
+        class="justify-center flex-1 max-w-6xl px-4 py-2 mx-auto bg-white border rounded-md dark:border-gray-900 dark:bg-gray-900 md:py-10 md:px-10">
         <div>
             {{-- title --}}
             <h1 class="px-4 mb-8 text-2xl font-semibold tracking-wide text-gray-700 dark:text-gray-300 ">
-                Thank you. Your order has been received.
+                {{ auth()->user()->name }}, Your order has been placed successfully 🎉
             </h1>
 
             {{-- user details --}}
@@ -13,12 +13,30 @@
                 <div class="flex items-start justify-start flex-shrink-0">
                     <div class="flex items-center justify-center w-full pb-6 space-x-4 md:justify-start">
                         <div class="flex flex-col items-start justify-start space-y-2">
+                            {{-- user name --}}
                             <p class="text-lg font-semibold leading-4 text-left text-gray-800 dark:text-gray-400">
-                                Cielo Schimmel</p>
-                            <p class="text-sm leading-4 text-gray-600 dark:text-gray-400">71582 Schmitt Springs</p>
-                            <p class="text-sm leading-4 text-gray-600 dark:text-gray-400">Castro Valley, Delaware,
-                                53476-0454</p>
-                            <p class="text-sm leading-4 cursor-pointer dark:text-gray-400">Phone: 587-019-6103</p>
+                                {{ $latestOrder->address->full_name }}
+                            </p>
+
+                            {{-- user address --}}
+                            <p class="text-sm leading-4 text-gray-600 dark:text-gray-400">
+                                <span class="font-semibold"> Home number:</span>
+                                {{ $latestOrder->address->home }}{{ '   ' }}
+                                <span class="font-semibold">Block number:</span>
+                                {{ $latestOrder->address->block }}{{ '  ' }}
+                                <span class="font-semibold">Street number:</span>
+                                {{ $latestOrder->address->street }}{{ '  ' }}
+                            </p>
+
+                            {{-- user email --}}
+                            <p class="text-sm leading-4 cursor-pointer dark:text-gray-400">
+                                Email: {{ auth()->user()->email }}
+                            </p>
+
+                            {{-- phone number --}}
+                            <p class="text-sm leading-4 cursor-pointer dark:text-gray-400">
+                                Phone: +973 {{ $latestOrder->address->phone }}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -33,7 +51,7 @@
 
                     {{-- order id --}}
                     <p class="text-base font-semibold leading-4 text-gray-800 dark:text-gray-400">
-                        29
+                        {{ $latestOrder->id }}
                     </p>
                 </div>
 
@@ -44,7 +62,7 @@
 
                     {{-- order created at date --}}
                     <p class="text-base font-semibold leading-4 text-gray-800 dark:text-gray-400">
-                        17-02-2024
+                        {{ $latestOrder->created_at->format('d M Y') }}
                     </p>
                 </div>
 
@@ -56,7 +74,7 @@
 
                     {{-- order total price --}}
                     <p class="text-base font-semibold leading-4 text-blue-600 dark:text-gray-400">
-                        ₹157,495.00
+                        {{ Number::currency($latestOrder->total, 'bhd') }}
                     </p>
                 </div>
 
@@ -67,7 +85,7 @@
 
                     {{-- payment method --}}
                     <p class="text-base font-semibold leading-4 text-gray-800 dark:text-gray-400 ">
-                        Cash on Delivery
+                        {{ $latestOrder->payment_method == 'cash on Delivery' ? 'Cash on Delivery' : 'Credit Card' }}
                     </p>
                 </div>
             </div>
@@ -84,27 +102,36 @@
                             {{-- total details --}}
                             <div class="flex justify-between w-full">
                                 <p class="text-base leading-4 text-gray-800 dark:text-gray-400">Subtotal</p>
-                                <p class="text-base leading-4 text-gray-600 dark:text-gray-400">₹157,495.00</p>
+
+                                <p class="text-base leading-4 text-gray-600 dark:text-gray-400">
+                                    {{ Number::currency($latestOrder->total, 'bhd') }}
+                                </p>
                             </div>
 
                             {{-- discount details --}}
                             <div class="flex items-center justify-between w-full">
-                                <p class="text-base leading-4 text-gray-800 dark:text-gray-400">Discount
+                                <p class="text-base leading-4 text-gray-800 dark:text-gray-400">
+                                    Discount
                                 </p>
-                                <p class="text-base leading-4 text-gray-600 dark:text-gray-400">00</p>
+
+                                <p class="text-base leading-4 text-gray-600 dark:text-gray-400">
+                                    {{ Number::currency(0, 'bhd') }}
+                                </p>
                             </div>
 
                             {{-- shipping details --}}
-                            <div class="flex items-center justify-between w-full">
+                            {{-- <div class="flex items-center justify-between w-full">
                                 <p class="text-base leading-4 text-gray-800 dark:text-gray-400">Shipping</p>
                                 <p class="text-base leading-4 text-gray-600 dark:text-gray-400">00</p>
-                            </div>
+                            </div> --}}
                         </div>
 
                         {{-- final total price --}}
                         <div class="flex items-center justify-between w-full">
                             <p class="text-base font-semibold leading-4 text-gray-800 dark:text-gray-400">Total</p>
-                            <p class="text-base font-semibold leading-4 text-gray-600 dark:text-gray-400">₹157,495.00
+
+                            <p class="text-base font-semibold leading-4 text-gray-600 dark:text-gray-400">
+                                {{ Number::currency($latestOrder->total, 'bhd') }}
                             </p>
                         </div>
                     </div>
@@ -136,7 +163,9 @@
                                 </div>
                             </div>
 
-                            <p class="text-lg font-semibold leading-6 text-gray-800 dark:text-gray-400">00</p>
+                            <p class="text-lg font-semibold leading-6 text-gray-800 dark:text-gray-400">
+                                Free Delivery
+                            </p>
                         </div>
                     </div>
                 </div>

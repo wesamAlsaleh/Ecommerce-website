@@ -29,9 +29,9 @@ class Address extends Model
 
 
     /**
-     * this function is an accessor 
-     * accessors allow you to manipulate data before returning it 
-     * this accessor will return the full name of the address owner 
+     * this function is an accessor
+     * accessors allow you to manipulate data before returning it
+     * this accessor will return the full name of the address owner
      */
     public function getFullNameAttribute()
     {
